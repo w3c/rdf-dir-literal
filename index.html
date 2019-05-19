@@ -106,7 +106,7 @@
 
 					<p>RDF/XML can adopt an <code>rdf:dir</code> attribute, based on the <code>dir</code> attribute defined in&nbsp;[[html]]. I.e., an example could be:</p>
 
-					<pre class=example>
+					<pre class="nohighlight">
 						&lt;rdf:Description >
 							&lt;ex:example xml:lang="en" rdf:dir="rtl"><bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>&lt;/ex:example>
 						&lt;/rdf:Description>
@@ -119,13 +119,12 @@
 					<h2>Turtle/SPARQL</h2>
 					<p>Turtle has a special syntax for language tagged literals which could be extended:</p>
 
-					<pre class=example>
+					<pre class="nohighlight">
 						[] ex:example "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>"@he^rtl .
 					</pre>
+	
 
 					<p>The presence of the <code>^…</code> tag is optional, and defaults to the value of <code>auto</code>.</p>
-
-					<p class=ednote>I have no idea why respec turns part of the string in bold; it is not intentional…</p>
 				</section>
 
 				<section>
@@ -133,7 +132,7 @@
 
 					<p>JSON-LD uses special JSON objects to express language literals that can be extended via the introduction of a new JSON-LD keywords <code>@direction</code>:</p>
 
-					<pre class=example>
+					<pre class=nohighlight>
 						"ex:example" : {
 							"@value" : "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>"
 							"@language" : "he",
@@ -203,13 +202,13 @@
 
 				<p>Because this is a new datatype, strictly speaking there is no need for a new serialization; any concrete syntax has a way of expressing datatyped literals. E.g., the literal would have the form of
 					
-				<pre class=example>
-					[] ex:example "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>@he^rtl"^^rdf:LocalizableString
+				<pre class=nohighlight>
+					[] ex:example "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>@he^rtl"^^rdf:LocalizableString .
 				</pre>
 
 				<p>in Turtle, and</p>
 
-				<pre class=example>
+				<pre class=nohighlight>
 					"ex:example" : {
 						"@value" : "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>@he^rtl"
 						"@datatype" : "rdf:LocalizableString"
@@ -222,7 +221,7 @@
 					That being said, newer versions of the the serialization syntaxes MAY introduce syntactic facilities to express this new datatype. E.g., a newer version of JSON-LD MAY consider
 				</p>
 
-				<pre class=example>
+				<pre class=nohighlight>
 					"ex:example" : {
 						"@value" : "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>"
 						"@language" : "he",
