@@ -176,7 +176,7 @@
 					<ii>A URL uniquely defining the new datatype</ii>
 				</ul>
 
-				<p>The definition may mean:</p>
+				<p>The definition a new datatype means, in this case:</p>
 
 				<dl>
 					<dt>Lexical space</dt>
@@ -235,7 +235,7 @@
 				<h2>Pros and Cons</h2>
 
 				<p>
-					The major advantage of this approach is that it is mostly transparent to the current RDF deployments, and it affects only application layers that do display the literal values for humans. It also works for parsers “out of the box”, unless new serialization versions are defined.
+					The major advantage of this approach is that it is mostly transparent to  current RDF deployments, and it affects only application layers that do display the literal values for humans. It also works for parsers “out of the box”, unless new serialization versions are defined.
 				</p>
 
 				<p>
@@ -245,13 +245,65 @@
 		</section>
 
 		<section id=extending-bcp>
-			<h2>Expand language tags</h2>
+			<h2>Extend language tags</h2>
 
-			<p>(T.B.D.)</p>
+			<section>
+				<h2>Core definition</h2>
+				<p>
+					The approach is to add a <code>-d-dir</code> to the [[bcp47]] language tag. The language tag would look like <code>lang-d-dir</code>, where <code>lang</code> is a valid [[bcp47]] language tag, and <code>dir</code> pattern MUST have the value of <code>ltr</code>, <code>rtl</code>, or <code>auto</code>, with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]].
+				</p>
+			</section>
+
+			<section>
+				<h2>Serializations</h2>
+
+				<p>
+					In terms of serializations, this change would be completely transparent for RDF. Ie, the example used before is:
+				</p>
+
+				<pre class=nohighlight>
+					[] ex:example "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>@he-d-rtl .
+				</pre>
+
+				<p>in Turtle, and</p>
+
+				<pre class=nohighlight>
+					"ex:example" : {
+						"@value" : "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>"
+						"@language" : "he-d-rtl"
+					}
+				</pre>
+
+				<p>in JSON-LD.</p>
+			</section>
+
+			<section>
+				<h2>Pros and Cons</h2>
+
+				<p>
+					The major advantage of this approach is that it is fully transparent to current RDF deployments, and it affects only application layers that do display the literal values for humans. It also works for parsers “out of the box” unless they check the validity of the language tag.
+				</p>
+
+				<p>
+					The major disadvantage is that [[bcp47]] is already a very complex specification, in terms of the rich "metadata" that it assign to languages. (Witness the regular expression used to check a&nbsp;[[bcp47]] tag, e.g., in an <a href="https://stackoverflow.com/questions/7035825/regular-expression-for-a-language-tag-as-defined-by-bcp47">stack overflow answer</a>.) It is also not clear whether it "fits" the purpose of&nbsp;[[bcp47]], which is to describe metadata about language, scripts used, etc, and not a feature that is relevant for the <em>display</em> of that string. 
+				</p>
+
+				<p>
+					Introducing such a change would also affect a community way larger than the RDF and related communities, and the consequences are not easy to oversee…
+				</p>
+			</section>
+		</section>
+
+		<section class=appendix>
+			<h2>Acknowledgement</h2>
+
+			<p>These ideas are not of my own only. This is the result of a series of discussions, email contributions, etc, of a number of people, including Manu Sporny, Pierre-Antoine Champin, Gregg Kellogg, David Longley, Rob Sanderson, Benjamin Young, Charles Neville, Richard Ishida, and Addison Philips.</p>
 		</section>
 
 		<section class=appendix id=concept-modifications>
-			<h2>Modifying the <code>langString</code> in the RDF 1.1 Concepts document</h2>
+			<h2>Modification of the <code>langString</code> in the RDF 1.1 Concepts document</h2>
+
+			<p>(Spelling out the proposal in <a href="#extending-lang-string"></a>.)</p>
 
 			<p>
 				The current definition for <code>langString</code> is in <a data-cite="!rdf11-concepts#section-Graph-Literal">section 3.3</a> of the RDF 1.1 document. The subsection below proposes a replacement for that sections, with the changes highlighted.
