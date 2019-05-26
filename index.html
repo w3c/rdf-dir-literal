@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>RDF Literals and Base Directions</title>
+		<script src="biblio.js" class="remove"></script>
 		<script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove" defer></script>
 		<script class="remove">
 			var respecConfig = {
@@ -31,7 +32,8 @@
 				github:			 {
   				  	repoURL: "https://github.com/w3c/rdf-dir-literal/",
   				  	branch: "master"
-   			    }
+   			    },
+				localBiblio: biblio
 			};
 		</script>
 		<style>
@@ -54,7 +56,28 @@
 		<section id="introduction">
 			<h2>Introduction</h2>
 
-			<p>T.B.D.</p>			
+			<p>
+				There is a problem at the intersection of RDF Literals and internationalization. When using string Literals for natural language texts, the <a data-cite="!rdf11-concepts#section-Graph-Literal"><code>langString</code> datatype</a> of RDF 1.1&nbsp;[[rdf11-concepts]] does provide the possibility to add the language information via a [[bcp47]] language tag. However, it is not possible to express the <em>base text direction</em> (i.e., right-to-left or left-to-right) of the same literal. 
+			</p>
+			<p>
+				While, in many cases, this information can be deduced from a text itself by looking at the first “strongly typed” Unicode character (i.e., not a punctuation, for example) which includes the necessary information, this may be misleading at times. An obvious problematic situation is when this first character happens to be a Latin character in a Hebrew text; the algorithm may deduce that the text is to be rendered in a left-to-right order, which would be wrong. 
+			</p>
+			<p>
+				There are a number of documents that describe the problem in more details for various usages, like&nbsp;[[string-meta]], [[inline-bid-markup]], or&nbsp;[[uba-basics]]. The bottom line is that any specification that expresses natural language texts SHOULD have the means to provide an additional information on the base direction of a text (e.g., set to right-to-left in our example above).  While this issue is solved in&nbsp;[[html]] through the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a>, and can be done in a straightforward way when defining, e.g., a set of terms in JSON (see&nbsp;[[string-meta]] for some viable approaches), this is not possible when using a serialization syntax of RDF like Turtle&nbsp;[[turtle]] or JSON-LD&nbsp;[[json-ld]].
+			</p>
+
+			<p>
+				This problem has affected a number of specifications that define RDF vocabularies (usually expressed in JSON-LD). These includes Activity Streams&nbsp;[[activitystreams-core]], Web Publications&nbsp;[[wpub]], or Verifiable Credentials&nbsp;[[verifiable-claims-data-model]]. There have been parallel discussions in the various Working Groups (see, e.g., <a href="https://github.com/w3c/vc-data-model/issues/436">VC issue #436</a> or <a href="https://github.com/w3c/wpub/issues/354">WPUB issue #354</a>). This problem was also discussed around the editorial work of [[string-meta]] (see, e.g., <a href="https://github.com/w3c/string-meta/issues/12">issue #12</a>). All these discussions led to the same conclusion: because RDF cannot express this information, neither can JSON-LD (and the upcoming 1.1 version of JSON-LD&nbsp;[[json-ld11]] cannot offer a solution either). In other words, this is a problem that must be solved on the RDF level.
+			</p>
+
+			<p>
+				This document collects some some of the possible solutions that can remedy the problem. All these approaches have their pros and cons; the choice will have to be made by the community.
+			</p>
+
+			<p class=note>
+				The problem of setting the base direction for a string is, actually, the tip of the iceberg of internationalization issues around RDF literals. This document focuses on so far <em>only</em> only on establishing the overall directional context for a given string. The larger problems is the handling of directional and languages changes <em>within</em> a string. To solve that larger issue would require the use Unicode formatting characters in plain text strings or use HTML format strings, i.e., the <a data-cite="!rdf11-concepts#section-html"><code>HTML</code> datatype</a> of RDF 1.1&nbsp;[[rdf11-concepts]]. While both of these <em>can</em> be done in today’s RDF, there are several problems with both those approaches (see also [[string-meta]] for some of the issues) which warrants to find a somewhat simpler solution for the base direction case.
+			</p>
+
 		</section>
 
 		<section>
@@ -73,7 +96,7 @@
 				</li>
 			</ol>
 
-			<p>All these approaches have their pros and cons in terms of specifications, serializations, and deployments. The choice will have to be done by the community.</p>
+			<p>All these approaches have their pros and cons in terms of specifications, serializations, and deployments. The choice will have to be made by the community.</p>
 
 		</section>
 
