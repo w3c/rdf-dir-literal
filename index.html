@@ -1,162 +1,176 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
-	<head>
-		<meta charset="utf-8" />
-		<title>RDF Literals and Base Directions</title>
-		<script src="biblio.js" class="remove"></script>
-		<script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove" defer></script>
-		<script class="remove">
-			var respecConfig = {
-				specStatus: "base",
-				shortName: "dir-rdf-literal",
-				noRecTrack: true,
-				// previousPublishDate: "2017-01-04",
-				// previousMaturity: "WD",
-				// edDraftURI: "https://w3c.github.io/pwpub/",
-				editors: [
-				{
-                    "name": "Ivan Herman",
-                    "url": "https://www.w3.org/People/Ivan/",
-                    "company": "W3C",
-					"w3cid": 7382,
-					"orcid": "0000-0003-0782-2704",
-                    "companyURL": "https://www.w3.org",
-                }],
-				processVersion:    2018,
-				includePermalinks: true,
-              	permalinkEdge:     true,
-              	permalinkHide:     false,
-				diffTool:          "http://www.aptest.com/standards/htmldiff/htmldiff.pl",
-				wgURI:             "https://www.w3.org/publishing/groups/publ-wg/",
-				license: 		   "w3c-software-doc",
-				github:			 {
-  				  	repoURL: "https://github.com/w3c/rdf-dir-literal/",
-  				  	branch: "master"
-   			    },
-				localBiblio: biblio
-			};
-		</script>
-		<style>
-			.add {
-				background: yellow;
-			}
-			.delete {
-				text-decoration: line-through;
-				background: greenyellow;
-			}
-			section section {
-				margin-left: 2em;
-			}
-			.nohighlight {
-				background-color: cornsilk;
-				padding: 1em;
-			}
-		</style>
-	</head>
-	<body>
-		<section id="abstract">
-			<p>Proposal to add base directions to RDF Literals.
-			</p>
-		</section>
-		<section id="sotd"></section>
 
-		<section id="introduction">
-			<h2>Introduction</h2>
+<head>
+    <meta charset="utf-8" />
+    <title>RDF Literals and Base Directions</title>
+    <script src="biblio.js" class="remove"></script>
+    <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove" defer></script>
+    <script class="remove">
+        var respecConfig = {
+            specStatus: "base",
+            shortName: "dir-rdf-literal",
+            noRecTrack: true,
+            // previousPublishDate: "2017-01-04",
+            // previousMaturity: "WD",
+            // edDraftURI: "https://w3c.github.io/pwpub/",
+            editors: [{
+                "name": "Ivan Herman",
+                "url": "https://www.w3.org/People/Ivan/",
+                "company": "W3C",
+                "w3cid": 7382,
+                "orcid": "0000-0003-0782-2704",
+                "companyURL": "https://www.w3.org",
+            }],
+            processVersion: 2018,
+            includePermalinks: true,
+            permalinkEdge: true,
+            permalinkHide: false,
+            diffTool: "http://www.aptest.com/standards/htmldiff/htmldiff.pl",
+            wgURI: "https://www.w3.org/publishing/groups/publ-wg/",
+            license: "w3c-software-doc",
+            github: {
+                repoURL: "https://github.com/w3c/rdf-dir-literal/",
+                branch: "master"
+            },
+            localBiblio: biblio
+        };
+    </script>
+    <style>
+        .add {
+            background: yellow;
+        }
+        
+        .delete {
+            text-decoration: line-through;
+            background: greenyellow;
+        }
+        
+        section section {
+            margin-left: 2em;
+        }
+        
+        .nohighlight {
+            background-color: cornsilk;
+            padding: 1em;
+        }
+    </style>
+</head>
 
-			<p>
-				There is a problem at the intersection of RDF Literals and internationalization. When using string Literals for natural language texts, the <a data-cite="!rdf11-concepts#section-Graph-Literal"><code>langString</code> datatype</a> of RDF 1.1&nbsp;[[rdf11-concepts]] does provide the possibility to add the language information via a [[bcp47]] language tag. However, it is not possible to express the <em>base text direction</em> (i.e., right-to-left or left-to-right) of the same literal. 
-			</p>
-			<p>
-				While, in many cases, this information can be deduced from a text itself by looking at the first “strongly typed” Unicode character (i.e., not a punctuation, for example) which includes the necessary information, this may be misleading at times. A problematic situation is when this first character happens to be a Latin character in a Hebrew text; the algorithm may deduce that the text is to be rendered in a left-to-right order, which would be wrong. 
-			</p>
-			<p>
-				There are a number of documents that describe the problem in more details for various usages, like&nbsp;[[string-meta]], [[inline-bid-markup]], or&nbsp;[[uba-basics]]. The bottom line is that any specification that expresses natural language texts SHOULD have the means to provide an additional information on the base direction of a text (e.g., set to right-to-left in our example above).  While this issue is solved in&nbsp;[[html]] through the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a>, and can be done in a straightforward way when defining, e.g., a set of terms in JSON (see&nbsp;[[string-meta]] for some viable approaches), this is not possible when using a serialization syntax of RDF like Turtle&nbsp;[[turtle]] or JSON-LD&nbsp;[[json-ld]].
-			</p>
+<body>
+    <section id="abstract">
+        <p>
+			Proposal to add base direction information to RDF Literals.
+        </p>
+    </section>
+    <section id="sotd"></section>
 
-			<p>
-				This problem has affected a number of specifications that define RDF vocabularies (usually expressed in JSON-LD). These includes Activity Streams&nbsp;[[activitystreams-core]], Web Publications&nbsp;[[wpub]], or Verifiable Credentials&nbsp;[[verifiable-claims-data-model]]. There have been parallel discussions in the various Working Groups (see, e.g., <a href="https://github.com/w3c/vc-data-model/issues/436">VC issue #436</a> or <a href="https://github.com/w3c/wpub/issues/354">WPUB issue #354</a>). This problem was also discussed around the editorial work of [[string-meta]] (see, e.g., <a href="https://github.com/w3c/string-meta/issues/12">issue #12</a>). All these discussions led to the same conclusion: because RDF cannot express this information, neither can JSON-LD (and the upcoming 1.1 version of JSON-LD&nbsp;[[json-ld11]] cannot offer a solution either). In other words, this is a problem that must be solved on the RDF level.
-			</p>
+    <section id="introduction">
+        <h2>Introduction</h2>
 
-			<p>
-				This document collects some some of the possible solutions that can remedy the problem. All these approaches have their pros and cons; the choice will have to be made by the community.
-			</p>
+        <p>
+            There is a problem at the intersection of RDF Literals and internationalization. When using string Literals for natural language texts, the <a data-cite="!rdf11-concepts#section-Graph-Literal"><code>langString</code> datatype</a> of RDF 1.1&nbsp;[[rdf11-concepts]]
+            provides the possibility to add the language information via a [[bcp47]] language tag. However, it is not possible to express the <em>base text direction</em> (i.e., right-to-left or left-to-right) of the same literal.
+        </p>
+        <p>
+            While, in many cases, this information can be deduced from a text itself by looking at the first “strongly typed” Unicode character (i.e., not a punctuation, for example), this may be misleading at times. An example for a problematic
+            situation is when this first character happens to be a Latin character in a Hebrew text; the algorithm may deduce that the text is to be rendered in a left-to-right order, which would be wrong.
+        </p>
+        <p>
+            There are a number of documents that describe the problem in more details for various usages, like&nbsp;[[string-meta]], [[inline-bid-markup]], or&nbsp;[[uba-basics]]. The bottom line is that any specification that expresses natural language texts SHOULD
+            have the means to provide an additional information on the base direction of a text (e.g., set to right-to-left in our example above). While this issue is solved in&nbsp;[[html]] through the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a>,
+            and can be done when defining, e.g., a set of terms in simple JSON (see&nbsp;[[string-meta]] for some viable approaches), this is not possible in the abstract model of RDF and, consequently, in the serialization syntaxes of RDF like Turtle&nbsp;[[turtle]] or JSON-LD&nbsp;[[json-ld]].
+        </p>
 
-			<p class=note>
-				The problem of setting the base direction for a string is, actually, the tip of the iceberg of internationalization issues around RDF literals. This document focuses on so far <em>only</em> only on establishing the overall directional context for a given string. The larger problems is the handling of directional and languages changes <em>within</em> a string. To solve that larger issue would require the use Unicode formatting characters in plain text strings or use HTML format strings, i.e., the <a data-cite="!rdf11-concepts#section-html"><code>HTML</code> datatype</a> of RDF 1.1&nbsp;[[rdf11-concepts]]. While both of these <em>can</em> be done in today’s RDF, there are several problems with both those approaches (see also [[string-meta]] for some of the issues) which warrants to find a somewhat simpler solution for the base direction case.
-			</p>
+        <p>
+            This problem has affected a number of specifications that define RDF vocabularies (usually expressed in JSON-LD). These include, e.g., Activity Streams&nbsp;[[activitystreams-core]], Web Publications&nbsp;[[wpub]], Verifiable Credentials&nbsp;[[verifiable-claims-data-model]], or [[wot-thing-description]]. There have been parallel discussions in the various Working Groups (see, e.g., <a href="https://github.com/w3c/vc-data-model/issues/436">VC issue #436</a>, <a href="https://github.com/w3c/wpub/issues/354">WPUB issue #354</a>, or <a href="https://github.com/w3c/wot-thing-description/issues/643">WoT issue #643</a>). This problem was also discussed during the editorial work of [[string-meta]] (see, e.g., <a href="https://github.com/w3c/string-meta/issues/12">issue #12</a>). All these discussions led to the same conclusion: because RDF cannot express this information, neither can JSON-LD or Turtle. In other words, this is a problem that must be solved on the RDF level.
+        </p>
 
-		</section>
+        <p>
+            This document collects some some of the possible solutions that came to the fore in various discussions. All these approaches have their pros and cons; the choice will have to be made by the community; the goal is to have a unified approach for all W3C specifications instead of each of those having to come up with some heuristics separately.
+        </p>
 
-		<section>
-			<h2>Overview of the proposals</h2>
-			<p>
-				This document points to several fundamental approaches that have been discussed. All of these require more detailed specification work in case a particular approach is chosen; the current document only outlines the various options to help the community to choose the right approach.
-			</p>
+        <p class=note>
+            The problem of setting the base direction for a string is, actually, the tip of the iceberg of internationalization issues around RDF literals. This document focuses on so far <em>only</em> only on establishing the overall directional context
+            for a given string. The larger problems is the handling of directional and languages changes <em>within</em> a string. To solve that larger issue would require the use Unicode formatting characters in plain text strings or use HTML format
+            strings, i.e., the <a data-cite="!rdf11-concepts#section-html"><code>HTML</code> datatype</a> of RDF 1.1&nbsp;[[rdf11-concepts]]. While both of these <em>can</em> be done in today’s RDF, there are several problems with both those approaches
+            (see also [[string-meta]] for some of the issues) which warrants to find a somewhat simpler solution for the base direction case.
+        </p>
 
-			<p>
-				All these approaches have their pros and cons in terms of specifications, serializations, and deployments. The final choice will have to be made by the community.
-			</p>
+    </section>
 
-			<p>
-				For details, the interested reader may refer to the <a href="https://github.com/w3c/rdf-dir-literal/issues/">issue discussions</a> related to the present document, the “Strings on the Web: Language and Direction Metadata.”&nbsp;[[string-meta]] document put together by the I18N Working Group at W3C, as well as the various W3C I18N articles on the subject, like&nbsp;[[inline-bid-markup]] or&nbsp;[[uba-basics]].
-			</p>
+    <section>
+        <h2>Overview of the proposals</h2>
+        <p>
+            This document describes several approaches that have been discussed. All of these may require more detailed specification work and they all have their pros and cons in terms of specifications, serializations, and deployments. The final choice will have to be made by the community.
+        </p>
 
-			<section id=extending-lang-string>
-				<h2>Extend <code>langString</code></h2>
+        <p>
+            For more details, the reader may refer to the <a href="https://github.com/w3c/rdf-dir-literal/issues/">issue discussions</a> related to the present document, the&nbsp;[[string-meta]]
+            document put together by the I18N Working Group at W3C, as well as the various W3C I18N articles on the subject, like&nbsp;[[inline-bid-markup]] or&nbsp;[[uba-basics]].
+        </p>
 
-				<section>
-					<h2>The core definition</h2>
-					<p>
-						The current definition for <code>langString</code> is in <a data-cite="!rdf11-concepts#section-Graph-Literal">section 3.3</a> of the RDF 1.1 document&nbsp;[[rdf11-concepts]]. It is based upon assigning a language tag, using&nbsp;[[bcp47]], to a string. It is somewhat of an odd case in the RDF&nbsp;1.1 model insofar as it has, in contrast to all other data types in RDF, an additional structure: the lexical space is a string <em>and</em> the additional (language) tag, and the value space of the datatype is also defined as a <em>tuple</em> consisting of the literal string and the language tag. This peculiarity means that <code>langString</code> literals have to be treated separately by all RDF processors.
-					</p>
+        <section id=extending-lang-string>
+            <h2>Extend <code>langString</code></h2>
 
-					<p>
-						Extending this core datatype would mean to keep this unique structure and to add a third element to the tuple both in the lexical and the value spaces for a base direction. This base direction tag MUST have the value of <code>ltr</code>, <code>rtl</code>, or <code>auto</code>, with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]. (The value of <code>auto</code> for the base direction tag represents a default behavior for the rendering of bidirectional texts, and can be used by concrete syntaxes as a “default” value.)
-					</p>
+            <section>
+                <h2>The core definition</h2>
+                <p>
+                    The current definition for <code>langString</code> is in <a data-cite="!rdf11-concepts#section-Graph-Literal">section 3.3</a> of the RDF 1.1 document&nbsp;[[rdf11-concepts]]. It is based upon assigning a language tag, using&nbsp;[[bcp47]],
+                    to a string. It is somewhat of an odd case in the RDF&nbsp;1.1 model insofar as it has, in contrast to all other data types in RDF, an additional structure: the lexical space is a string <em>and</em> the additional (language) tag,
+                    and the value space of the datatype is also defined as a <em>tuple</em> consisting of the literal string and the language tag. This peculiarity means that <code>langString</code> literals have to be treated separately by all RDF implementations.
+                </p>
 
-					<p>
-						<a href="./langString.html">A separate document</a> contains the necessary changes in the <a data-cite="!rdf11-concepts#section-Graph-Literal">relevant section</a> of RDF 1.1&nbsp;[[rdf11-concepts]].
-					</p>
-				</section>
-				<section id=base-serializations>
-					<h2>Serializations</h2>
+                <p>
+                    Extending this core datatype would mean to keep this unique structure and to add a third element for a base direction to the tuple both in the lexical and the value spaces. This base direction tag MUST have the value of <code>ltr</code>,
+                    <code>rtl</code>, or <code>auto</code>, with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]. (The value of <code>auto</code> for the base direction tag
+                    represents a default behavior for the rendering of bidirectional texts, and can be used by concrete syntaxes as a “default” value.)
+                </p>
 
-					<p>
-						The serializations of the renewed <code>langString</code> SHOULD be defined in such way that the presence of a base direction tag is OPTIONAL. This is important to ensure that current RDF datasets would remain valid. This means the parsing of language literals should replace the missing base direction tag with <code>auto</code>. 
-					</p>
+                <p>
+                    <a href="./langString.html">A separate document</a> contains the necessary changes in the <a data-cite="!rdf11-concepts#section-Graph-Literal">relevant section</a> of RDF 1.1&nbsp;[[rdf11-concepts]].
+                </p>
+            </section>
+            <section id=base-serializations>
+                <h2>Serializations</h2>
 
-					<section>
-						<h2>RDF/XML</h2>
+                <p>
+                    The serializations of a renewed <code>langString</code> SHOULD be defined in such way that the presence of a base direction tag is OPTIONAL. This is important to ensure that current RDF datasets would remain valid. This means the
+                    parsing of language literals should replace the missing base direction tag with <code>auto</code>.
+                </p>
 
-						<p>RDF/XML can adopt a new <code>rdf:dir</code> attribute, based on the <code>dir</code> attribute defined in&nbsp;[[html]]. I.e., an example could be:</p>
+                <section>
+                    <h2>RDF/XML</h2>
 
-						<pre class="nohighlight">
+                    <p>RDF/XML can adopt a new <code>rdf:dir</code> attribute, based on the <code>dir</code> attribute defined in&nbsp;[[html]]. I.e., an example could be:</p>
+
+                    <pre class="nohighlight">
 							&lt;rdf:Description >
 							    &lt;ex:example xml:lang="en" rdf:dir="rtl"><bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>&lt;/ex:example>
 							&lt;/rdf:Description>
 						</pre>
 
-						<p>The presence of <code>rdf:dir</code> is optional, and defaults to the value of <code>auto</code>.</p>
-					</section>
+                    <p>The presence of <code>rdf:dir</code> is optional and defaults to <code>auto</code>.</p>
+                </section>
 
-					<section>
-						<h2>Turtle/SPARQL</h2>
-						<p>Turtle has a special syntax for language tagged literals which could be extended:</p>
+                <section>
+                    <h2>Turtle/SPARQL</h2>
+                    <p>Turtle has a special syntax for language tagged literals which could be extended:</p>
 
-						<pre class="nohighlight">
+                    <pre class="nohighlight">
 							[] ex:example "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>"@he^rtl .
 						</pre>
-		
 
-						<p>The presence of the <code>^…</code> tag is optional, and defaults to the value of <code>auto</code>.</p>
-					</section>
 
-					<section>
-						<h2>JSON-LD</h2>
+                    <p>The presence of the <code>^…</code> tag is optional and defaults to <code>auto</code>.</p>
+                </section>
 
-						<p>JSON-LD uses special JSON objects to express language literals that can be extended via the introduction of a new JSON-LD keywords <code>@direction</code>:</p>
+                <section>
+                    <h2>JSON-LD</h2>
 
-						<pre class=nohighlight>
+                    <p>JSON-LD uses special JSON objects to express language literals that can be extended via the introduction of a new JSON-LD keywords <code>@direction</code>:</p>
+
+                    <pre class=nohighlight>
 							"ex:example" : {
 							    "@value" : "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>",
 							    "@language" : "he",
@@ -164,90 +178,94 @@
 							}
 						</pre>
 
-						<p>The presence of <code>@direction</code> is optional, and defaults to the value of <code>auto</code>.</p>
-					</section>
-				</section>
-				<section>
-					<h2>Pros and Cons</h2>
+                    <p>The presence of <code>@direction</code> is optional and defaults to <code>auto</code>.</p>
+                </section>
+            </section>
+            <section>
+                <h2>Pros and Cons</h2>
 
-					<p>
-						Extending the <code>langString</code> can be considered as the “ideal” solution: it takes care of what could be considered (from an internationalization point of view) a missing feature, some would call it a bug, in the original RDF specification. It also fits very well the current specification. Its effects on the RDF Semantics&nbsp;[[rdf11-mt]] is only editorial: the tuples for <code>langString</code> for <a data-cite="!rdf11-mt#literals-and-datatypes">literals</a> in general, and  <a data-cite="!rdf11-mt#datatype-entailment">D-entailment</a> in particular, should simply include a new tag. Indeed, the RDF Semantics does not make use of the semantics of&nbsp;[[bcp47]] values, nor should it use the semantics of the base direction tag. 
-					</p>
+                <p>
+                    Extending the <code>langString</code> can be considered as the “ideal” solution: it takes care of what could be considered (from an internationalization point of view) as a missing feature (some would call it a bug) in the original RDF
+                    specification. It also fits very well the current specification. Its effects on the RDF Semantics&nbsp;[[rdf11-mt]] is only editorial: the tuples for <code>langString</code> for <a data-cite="!rdf11-mt#literals-and-datatypes">literals</a>                    in general, and <a data-cite="!rdf11-mt#datatype-entailment">D-entailment</a> in particular, should simply include a new tag. Indeed, the RDF Semantics does not make use of the semantics of&nbsp;[[bcp47]] values, nor should it use
+                    the semantics of the base direction tag.
+                </p>
 
-					<p>
-						The major problem is deployment. Because language tagged literals are treated separately in RDF, all implementations (Jena, RDFLib, Sesame, various triple stores, Turtle and RDF/XML parsers and serializers, etc.) MUST be updated. That may take a long time, and it may not be easy to convince the community to do so.
-					</p>
-				</section>
-			</section>
+                <p>
+                    The major problem is deployment. Because language tagged literals are treated separately in RDF, all implementations (Jena, RDFLib, Sesame, various triple stores, Turtle and RDF/XML parsers and serializers, etc.) MUST be updated. That may take a long
+                    time, and it may not be easy to convince the community to do so.
+                </p>
+            </section>
+        </section>
 
-			<section id=datatype>
-				<h2>Define a <code>LocalizableString</code> datatype</h2>
+        <section id=datatype>
+            <h2>Define a <code>LocalizableString</code> datatype</h2>
 
-				<p>
-					A new RDF <a data-cite="!rdf11-concepts#section-Datatypes">datatype</a> can be defined <em>on top of</em> the current RDF definition to cover the missing features.  
-				</p>
-		
-				<section>
-					<h2>Core definition</h2>
-					<p>
-						Defining a new datatype means is (per the <a data-cite="!rdf11-concepts#section-Datatypes">RDF specification</a>):
-					</p>
+            <p>
+                A new RDF <a data-cite="!rdf11-concepts#section-Datatypes">datatype</a> can be defined <em>on top of</em> the current RDF definition to cover the missing features.
+            </p>
 
-					<ul>
-						<li>Define a lexical space</li>
-						<li>Define a value space</li>
-						<li>Define a lexical-to-value mapping</li>
-						<li>Assign a unique URL to the new datatype</li>
-					</ul>
+            <section>
+                <h2>Core definition</h2>
+                <p>
+                    Defining a new datatype means is (per the <a data-cite="!rdf11-concepts#section-Datatypes">RDF specification</a>):
+                </p>
 
-					<p>These requirements can defined, for this this case, as follows:</p>
+                <ul>
+                    <li>Define a lexical space.</li>
+                    <li>Define a value space.</li>
+                    <li>Define a lexical-to-value mapping.</li>
+                    <li>Assign a unique URL to the new datatype.</li>
+                </ul>
 
-					<dl>
-						<dt>Lexical space</dt>
-						<dd>
-							Unicode [[UNICODE]] strings, which SHOULD be in Normal Form C&nbsp;[[nfc]], and which MUST follow the pattern <code>value@lang^dir</code>. <code>lang</code> is a&nbsp;[[bcp47]] language tag, and the <code>dir</code> pattern MUST have the value of <code>ltr</code> or <code>rtl</code>, with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]. The presence of the <code>lang</code> pattern is REQUIRED; the <code>^dir</code> is OPTIONAL.
-						</dd>
-						<dt>Value space</dt>
-						<dd>
-							Similar to the Lexical space, <em>except</em> that the <code>^dir</code> value is REQUIRED and can also take the value of <code>auto</code> (with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]).
-						</dd>
-						<dt>Lexical to value mapping</dt>
-						<dd>
-							If the lexical value is <code>value@lang^dir</code> the mapping is the identity mapping. If <code>^dir</code> is missing, then the corresponding value space entry is <code>value@lang^auto</code>.
-						</dd>
-						<dt>The URL uniquely defining the new datatype</dt>
-						<dd>
-							The obvious URL would be to put this into the RDF namespace, i.e., <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#LocalizableString</code>.
-						</dd>
-					</dl>
-				</section>
-				<section>
-					<h2>Serializations</h2>
+                <p>These requirements can defined, for this this case, as follows:</p>
 
-					<p>Because this is a new datatype, strictly speaking there is no need for a new serialization; all concrete syntaxes have a way to express literals with a datatype. E.g., the literal would have the form of
-						
-					<pre class=nohighlight>
+                <dl>
+                    <dt>Lexical space</dt>
+                    <dd>
+                        Unicode [[UNICODE]] strings, which SHOULD be in Normal Form C&nbsp;[[nfc]], and which MUST follow the pattern <code>value@lang^dir</code>. <code>lang</code> is a&nbsp;[[bcp47]] language tag, <code>dir</code> MUST
+                        have the value of <code>ltr</code> or <code>rtl</code>, with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]. The presence of the <code>lang</code>                        pattern is REQUIRED; <code>^dir</code> is OPTIONAL.
+                    </dd>
+                    <dt>Value space</dt>
+                    <dd>
+                        Similar to the Lexical space, <em>except</em> that the <code>dir</code> value is REQUIRED and can also take the value of <code>auto</code> (with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a>   in&nbsp;[[html]]).
+                    </dd>
+                    <dt>Lexical to value mapping</dt>
+                    <dd>
+                        If the lexical value is <code>value@lang^dir</code> the mapping is the identity mapping. If <code>^dir</code> is missing, then the corresponding value space entry is <code>value@lang^auto</code>.
+                    </dd>
+                    <dt>The URL uniquely defining the new datatype</dt>
+                    <dd>
+                        The obvious URL would be to put this into the RDF namespace, i.e., <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#LocalizableString</code>.
+                    </dd>
+                </dl>
+            </section>
+            <section>
+                <h2>Serializations</h2>
+
+                <p>Because this is a new datatype, strictly speaking there is no need for a new serialization; all concrete syntaxes have a way to express literals with a datatype. E.g., the literal would have the form of
+
+                    <pre class=nohighlight>
 						[] ex:example "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>@he^rtl"^^rdf:LocalizableString .
 					</pre>
 
-					<p>in Turtle, and</p>
+                    <p>in Turtle, and</p>
 
-					<pre class=nohighlight>
+                    <pre class=nohighlight>
 						"ex:example" : {
 						    "@value" : "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>@he^rtl",
 						    "@datatype" : "rdf:LocalizableString"
 						}
 					</pre>
 
-					<p>
-						in JSON-LD 1.0.
-					</p>
+                    <p>
+                        in JSON-LD 1.0.
+                    </p>
 
-					<p>
-						However, newer versions of the the serialization syntaxes MAY introduce the syntactic facilities to express this new datatype by adopting the <a href="#base-serializations">serialization formats</a> as defined for the <code>langString</code> extension case; these would be considered as syntactic sugar to generate these datatypes. E.g., 
-					</p>
+                    <p>
+                        However, newer versions of the the serialization syntaxes MAY introduce the syntactic facilities to express this new datatype by adopting the <a href="#base-serializations">serialization formats</a> as defined for the <code>langString</code>                        extension case; these would be considered as syntactic sugar to generate these datatypes. E.g.,
+                    </p>
 
-					<pre class=nohighlight>
+                    <pre class=nohighlight>
 						"ex:example" : {
 						    "@value" : "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>"
 						    "@language" : "he",
@@ -255,219 +273,238 @@
 						}
 					</pre>
 
-					<p>could be considered as valid, generating a <code>LocalizableString</code> when mapped upon RDF. An advantage of introducing such a shorthand in JSON is that vanilla JSON may adopt the same pattern which can be used in general (see also the definition of <a data-cite="string-meta#Localizable-String-Dictionary"><code>Localizable</code></a>.)</p>
+                    <p>could be considered as valid, generating a <code>LocalizableString</code> when mapped upon RDF. An advantage of introducing such a shorthand in JSON is that vanilla JSON may adopt the same pattern which can be used in general (see
+                        also the definition of <a data-cite="string-meta#Localizable-String-Dictionary"><code>Localizable</code></a>.)</p>
 
-					<p>(Care should be taken of the fact that adopting such extra syntactic facilities means that the same localizable string could be expressed in two different ways. While this may not be create too much problems in most cases, it may require some extra considerations if and when a canonical RDF format is defined.)</p>
-				</section>
-				<section>
-					<h2>Pros and Cons</h2>
+                    <p>(Care should be taken of the fact that adopting such extra syntactic facilities means that the same localizable string could be expressed in two different ways. While this may not create too much problems in most cases, it may require
+                        some extra considerations if and when a canonical RDF format is defined.)</p>
+            </section>
+            <section>
+                <h2>Pros and Cons</h2>
 
-					<p>
-						The major advantage of this approach is that it is mostly transparent to  current RDF deployments, and it affects only application layers that do display the literal values for humans. It also works for parsers “out of the box”, unless new serialization versions are defined.
-					</p>
+                <p>
+                    The major advantage of this approach is that it is mostly transparent to current RDF deployments, and it affects only application layers that do display the literal values for humans. It also works for parsers “out of the box”, unless new serialization
+                    versions are defined.
+                </p>
 
-					<p>
-						The major disadvantage is that it is never a good idea to introduce yet another micro-syntax into a specification; it is the source of confusion and possible errors. (This can be mitigated by introducing new syntactic sugars.) Also, applications that want to make use of base direction values would have to handle some sort of a duality, insofar as the data may include <em>both</em> a <code>langString</code> language string (i.e., without base direction value) <em>and</em> (possibly) a localizable string.
-					</p>
+                <p>
+                    The major disadvantage is that it is never a good idea to introduce yet another micro-syntax into a specification; it is the source of confusion and possible errors. (This can be mitigated by introducing new syntactic sugars.) Also, applications that
+                    want to make use of base direction values would have to handle some sort of a duality, insofar as the data may include <em>both</em> <code>langString</code> 
+                    <em>and</em> <code>LocalizableString</code> language strings.
+                </p>
 
-					<p>(See also <a data-cite="string-meta#issues-5">some further issues</a>.)</p>
-				</section>
-			</section>
+                <p>(See also <a data-cite="string-meta#issues-5">some further issues</a>.)</p>
+            </section>
+        </section>
 
-			<section id=extending-bcp>
-				<h2>Extend language tags with <code>-d-*</code></h2>
+        <section id=extending-bcp>
+            <h2>Extend language tags with <code>-d-*</code></h2>
 
-				<p>The core [[bcp47]] standard can be <em>extended</em> to include information about the base direction.</p>
+            <p>The core [[bcp47]] standard can be <em>extended</em> to include information on the base direction.</p>
 
-				<section>
-					<h2>Core definition</h2>
-					<p>
-						Add <code>-d-ltr</code> and <code>-d-rtl</code> to the [[bcp47]] language tags. I.e., a full language tag would look like <code>lang-d-dir</code>, where <code>lang</code> is a valid [[bcp47]] language tag as of today, and <code>dir</code> pattern MUST have the value of <code>ltr</code>, <code>rtl</code> with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]. See also&nbsp;[[d-langtag]].
-					</p>
-				</section>
+            <section>
+                <h2>Core definition</h2>
+                <p>
+                    Add <code>-d-ltr</code> and <code>-d-rtl</code> to the [[bcp47]] language tags. I.e., a full language tag could look like <code>lang-d-dir</code>, where <code>lang</code> is a valid [[bcp47]] language tag as of today, and <code>dir</code>                     MUST have the value of <code>ltr</code> or <code>rtl</code> with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]. See also&nbsp;[[d-langtag]].
+                </p>
+            </section>
 
-				<section>
-					<h2>Serializations</h2>
+            <section>
+                <h2>Serializations</h2>
 
-					<p>
-						In terms of serializations, this change could be completely transparent for RDF. I.e., the examples used before are:
-					</p>
+                <p>
+                    In terms of serializations, this change could be completely transparent for RDF. I.e., the examples used before would become:
+                </p>
 
-					<pre class=nohighlight>
+                <pre class=nohighlight>
 						[] ex:example "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>"@he-d-rtl .
 					</pre>
 
-					<p>in Turtle, and</p>
+                <p>in Turtle, and</p>
 
-					<pre class=nohighlight>
+                <pre class=nohighlight>
 						"ex:example" : {
 						    "@value" : "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>",
 						    "@language" : "he-d-rtl"
 						}
 					</pre>
 
-					<p>in JSON-LD.</p>
-				</section>
+                <p>in JSON-LD.</p>
+            </section>
 
-				<section>
-					<h2>Pros and Cons</h2>
+            <section>
+                <h2>Pros and Cons</h2>
 
-					<p>
-						The major advantage of this approach is that it is fully transparent to current RDF deployments, and it affects only application layers that do display the literal values for humans. It also works for parsers “out of the box” unless they check the validity of the language tag (which they usually don’t).
-					</p>
+                <p>
+                    The major advantage of this approach is that it is fully transparent to current RDF deployments, and it affects only application layers that do display the literal values for humans. It also works for parsers “out of the box” unless they check the validity
+                    of the language tag (which they usually don’t).
+                </p>
 
-					<p>
-						The major disadvantage is that [[bcp47]] is already a very complex specification, in terms of the rich "metadata" that it assigns to languages. (Witness the regular expression used to check a&nbsp;[[bcp47]] tag, e.g., in an <a href="https://stackoverflow.com/questions/7035825/regular-expression-for-a-language-tag-as-defined-by-bcp47">stack overflow answer</a>.) It is also not clear whether it "fits" the purpose of&nbsp;[[bcp47]], which is to describe metadata about language, scripts used, etc., and not a feature that is relevant for the <em>display</em> of that string. (See also the relevant <a href="https://mailarchive.ietf.org/arch/browse/ietf-languages/?gbt=1&index=FNDxsLMAPdb8I1Bw6iyGlWZvuGM">email thread</a> on the IETF mailing list.)
-					</p>
-					<p>	
-						
-						Another issue is that [[bcp47]] is widely used and deployed in various environments, for example in HTML or CSS. Any change on that core [[bcp47]] specification may have far reaching consequences because all these environment should be updated, considering also that there would be a redundancy in terms of functionality (a renewed language tag format vs. the existing <code>dir</code> attribute). See, e.g., the <a href="https://github.com/w3c/rdf-dir-literal/issues/3#issuecomment-496616230">issue comment</a> outlining the possible difficulties.
-					</p>
+                <p>
+                    A major disadvantage is that [[bcp47]] is already a very complex specification, in terms of the rich "metadata" that it assigns to languages. (Witness the regular expression used to check a&nbsp;[[bcp47]] tag, e.g., in an <a href="https://stackoverflow.com/questions/7035825/regular-expression-for-a-language-tag-as-defined-by-bcp47">stack overflow answer</a>.)
+                    It is also not clear whether it "fits" the purpose of&nbsp;[[bcp47]], which is to describe metadata about language, scripts used, etc., and not a feature that is relevant for the <em>display</em> of that string. (See also the relevant
+                    <a href="https://mailarchive.ietf.org/arch/browse/ietf-languages/?gbt=1&index=FNDxsLMAPdb8I1Bw6iyGlWZvuGM">email thread</a> on the IETF mailing list.)
+                </p>
+                <p>
 
-					<p>
-						Also, the interplay between current data deployment and the assignment of such extended language tags may not be obvious. See, e.g., <a href="https://github.com/w3c/rdf-dir-literal/issues/7#issuecomment-497337353">the issue comment</a> and the <a href="https://github.com/w3c/rdf-dir-literal/wiki/Draft-ideas-related-to-string-metadata-storage-options">separate Wiki</a> page outlining the possible difficulties.
-					</p>
-				</section>
-			</section>
+                    Another major issue is that [[bcp47]] is widely used and deployed in various environments, for example in HTML or CSS. Any change on that core [[bcp47]] specification may therefore have far reaching consequences because all these environment should be updated, considering
+                    also that there would be a redundancy in terms of functionality (the renewed language tag format vs. the existing <code>dir</code> attribute). See, e.g., an <a href="https://github.com/w3c/rdf-dir-literal/issues/3#issuecomment-496616230">issue comment</a>  outlining the possible difficulties.
+                </p>
 
-			<section id=private-tag>
-				<h2>Private-use subtag <code>-x-d-*</code></h2>
-	
-				<p>The core [[bcp47]] standard allows the usage of “private-use” subtag. These are chosen and maintained by private agreement amongst parties.</p>
-	
-				<section>
-					<h2>Core definition</h2>
-					<p>
-						Define on the usage of <code>-x-d-ltr</code> and <code>-x-d-rtl</code> private-use language subtags. The language tag would look like <code>lang-x-d-dir</code>, where <code>lang</code> is a valid [[bcp47]] language tag, and <code>dir</code> pattern MUST have the value of <code>ltr</code>, <code>rtl</code> with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]. Per definition this usage of this <em>restricted</em> to a specific family of specifications only (at this moment one could restrict it to RDF, OWL, SPARQL, their various serializations, plus JSON and CBOR).
-					</p>
-				</section>
+                <p>
+                    Also, the interplay between current data deployment and the assignment of such extended language tags may not be obvious. See, e.g., <a href="https://github.com/w3c/rdf-dir-literal/issues/7#issuecomment-497337353">the issue comment</a> and the <a href="https://github.com/w3c/rdf-dir-literal/wiki/Draft-ideas-related-to-string-metadata-storage-options">separate Wiki</a> page outlining the possible difficulties.
+                </p>
+            </section>
+        </section>
 
-				<section>
-					<h2>Serializations</h2>
+        <section id=private-tag>
+            <h2>Private-use subtag <code>-x-d-*</code></h2>
 
-					<p>
-						In terms of serializations, this change could be completely transparent for RDF. I.e., the examples used before are:
-					</p>
+            <p>The core [[bcp47]] standard allows the usage of “private-use” subtag. These are chosen and maintained by private agreement amongst parties.</p>
 
-					<pre class=nohighlight>
+            <section>
+                <h2>Core definition</h2>
+                <p>
+                    Define the <code>-x-d-ltr</code> and <code>-x-d-rtl</code> private-use language subtags. I.e., ahe language tag could look like <code>lang-x-d-dir</code>, where <code>lang</code> is a valid [[bcp47]] language tag, and <code>dir</code>  MUST have the value of <code>ltr</code>, <code>rtl</code> with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]. Per definition this usage of this private-use tag is <em>restricted</em> to a specific family of specifications (at this moment one could restrict it to RDF, OWL, SPARQL, SKOS, etc., their various serializations, plus possibly JSON and CBOR).
+                </p>
+            </section>
+
+            <section>
+                <h2>Serializations</h2>
+
+                <p>
+                    In terms of serializations, this change could be completely transparent for RDF. I.e., the examples used before would become:
+                </p>
+
+                <pre class=nohighlight>
 						[] ex:example "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>"@he-x-d-rtl .
 					</pre>
 
-					<p>in Turtle, and</p>
+                <p>in Turtle, and</p>
 
-					<pre class=nohighlight>
+                <pre class=nohighlight>
 						"ex:example" : {
 						    "@value" : "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>",
 						    "@language" : "he-x-d-rtl"
 						}
 					</pre>
 
-					<p>in JSON-LD.</p>
-				</section>
+                <p>in JSON-LD.</p>
+            </section>
 
-				<section>
-					<h2>Pros and Cons</h2>
+            <section>
+                <h2>Pros and Cons</h2>
 
-					<p>
-						The major advantage of this approach, just like <a href=#extending-bcp></a>, is that it is fully transparent to current RDF deployments, and it affects only application layers that do display the literal values for humans. It also works for parsers “out of the box” unless they check the validity of the language tag (which they usually don’t). Because it is explicitly restricted to some specifications, it can (and should) be ignored by HTML, CSS, or other usage areas of [[bcp47]].
-					</p>
+                <p>
+                    A major advantage of this approach are similar to <a href=#extending-bcp></a>: it is fully transparent to current RDF deployments, and it affects only application layers that do display the literal values for humans and it also works for parsers “out of the box. Because it is explicitly restricted to some specifications, it can (and should) be ignored by HTML, CSS, or other usage areas of [[bcp47]].
+                </p>
 
-					<p>
-						Just as for <a href=#extending-bcp></a>, a major disadvantage is that [[bcp47]] is already a very complex specification, in terms of the rich "metadata" that it assigns to languages. (Witness the regular expression used to check a&nbsp;[[bcp47]] tag, e.g., in an <a href="https://stackoverflow.com/questions/7035825/regular-expression-for-a-language-tag-as-defined-by-bcp47">stack overflow answer</a>.) It is also not clear whether it "fits" the purpose of&nbsp;[[bcp47]], which is to describe metadata about language, scripts used, etc., and not a feature that is relevant for the <em>display</em> of that string.
-					</p>
-					<p>
-						Also, the interplay between current data deployment and the assignment of such extended language tags may not be obvious. See, e.g., <a href="https://github.com/w3c/rdf-dir-literal/issues/7#issuecomment-497337353">the issue comment</a> and the <a href="https://github.com/w3c/rdf-dir-literal/wiki/Draft-ideas-related-to-string-metadata-storage-options">separate Wiki</a> page outlining the possible difficulties.
-					</p>
-				</section>
-			</section>
-			<section id=script-subtag>
-				<h2>Rely on current BCP47 only</h2>
+                <p>
+                    Just as for <a href=#extending-bcp></a>, a major disadvantage is that [[bcp47]] is already a very complex specification, in terms of the rich "metadata" that it assigns to languages. It is also not clear whether it "fits" the purpose of&nbsp;[[bcp47]], which is to describe metadata about language, scripts used, etc., and not a feature that is relevant for the <em>display</em> of that string. Furthermore, although it is restricted to a specific family of specification, its usage may “spill over” to other areas, creating confusion.
+                </p>
+                <p>
+                    Finally, just as for <a href=#extending-bcp></a>, the interplay between current data deployment and the assignment of such extended language tags may not be obvious.
+                </p>
+            </section>
+        </section>
+        <section id=script-subtag>
+            <h2>Rely on current BCP47 only</h2>
 
-				<p>A different approach stems from the observation that the current BCP-47 can be used, unchanged, to express the necessary base direction using, if necessary, the “script” subtag. For example, the tag <code>he-Hebr</code> reinforces, through the presence of the <code>Hebr</code> subtag that the language is not only Hebrew, but the script used is the Hebrew script, i.e., it is right-to-left. In other words:</p>
+            <p>A different approach stems from the observation that the current BCP-47 can be used, unchanged, to express the necessary base direction using, if necessary, the “script” subtag. For example, the tag <code>he-Hebr</code> reinforces, through
+                the presence of the <code>Hebr</code> subtag, that the language is not only Hebrew, but the string uses the Hebrew script, i.e., it <em>is</em> right-to-left. In other words:</p>
 
-				<pre class=nohighlight>
+            <pre class=nohighlight>
 					[] ex:example "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>"@he-Hebr .
 				</pre>
 
-				<p>or</p>
+            <p>or</p>
 
-				<pre class=nohighlight>
+            <pre class=nohighlight>
 					"ex:example" : {
 					    "@value" : "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>",
 					    "@language" : "e-Hebr"
 					}
 				</pre>
 
-				<p>
-					would take care of all possible ambiguities, and no further directional information is necessary. As a consequence, from a specification point of view, no other action has to be taken (although a good best practices documentation may be necessary on the usage of this subtag).
-				</p>
+            <p>
+                would take care of all possible ambiguities, and no further directional information is necessary. As a consequence, from an RDF, JSON-LD, Turtle, etc., specification point of view, no other action has to be taken (although a good best practices documentation may be necessary on the usage of this subtag).
+            </p>
 
-				<section>
-					<h2>Pros and Cons</h2>
+            <section>
+                <h2>Pros and Cons</h2>
 
-					<p>
-						The major advantage of this approach is that there is no specification work to be done on the RDF, JSON, etc., side.
-					</p>
+                <p>
+                    The major advantage of this approach is that there is no specification work to be done on the RDF, JSON, etc., side.
+                </p>
 
-					<p>
-						Just as for <a href="#extending-bcp"></a> and <a href="#private-tag"></a>, the interplay between current data deployment and the assignment of such extended language tags may not be obvious. See, e.g., <a href="https://github.com/w3c/rdf-dir-literal/issues/7#issuecomment-497337353">the issue comment</a> and the <a href="https://github.com/w3c/rdf-dir-literal/wiki/Draft-ideas-related-to-string-metadata-storage-options">separate Wiki</a> page outlining the possible difficulties.
-					</p>
-				</section>
-			</section>
+                <p>
+                    Just as for
+                    <a href="#extending-bcp"></a> and
+                    <a href="#private-tag"></a>, the interplay between current data deployment and the assignment of such extended language tags may not be obvious. See, e.g., <a href="https://github.com/w3c/rdf-dir-literal/issues/7#issuecomment-497337353">the issue comment</a>                    and the <a href="https://github.com/w3c/rdf-dir-literal/wiki/Draft-ideas-related-to-string-metadata-storage-options">separate Wiki</a> page outlining the possible difficulties.
+                </p>
+            </section>
+        </section>
 
-			<section>
-				<h2>Rely on the UNICODE formatting characters</h2>
+        <section>
+            <h2>Rely on the UNICODE formatting characters</h2>
 
-				<p>
-					The base direction of a string may also be controlled by the Unicode formatting characters U+200E LEFT-TO-RIGHT MARK or U+200F RIGHT-TO-LEFT MARK. This means that user agents SHOULD identify the base direction of any given natural language value by scanning the text for the first strong directional character that may include these formatting characters. (See, e.g., the <a href="https://w3c.github.io/wpub/#app-bidi-examples">Web Publication draft</a>&nbsp;[[wpub]] for some examples.)
-				</p>
+            <p>
+                The base direction of a string may also be controlled by the Unicode formatting characters U+200E LEFT-TO-RIGHT MARK or U+200F RIGHT-TO-LEFT MARK. This means that user agents receiving such a string could identify the base direction of any given natural language value by scanning the text for the first strong directional character that may include these formatting characters; no further information is strictly necessary. (See, e.g., the <a href="https://w3c.github.io/wpub/#app-bidi-examples">Web Publication draft</a>&nbsp;[[wpub]] for some examples.)
+            </p>
 
-				<section>
-					<h2>Serializations</h2>
+            <section>
+                <h2>Serializations</h2>
 
-					<p>
-						In terms of serializations, this change could be completely transparent for RDF. Ie, the example used before is:
-					</p>
+                <p>
+                    In terms of serializations, this change could be completely transparent for RDF. Ie, the example used before would become:
+                </p>
 
-					<pre class=nohighlight>
+                <pre class=nohighlight>
 						[] ex:example "<bdo dir="ltr">\u200F&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>"@he .
 					</pre>
 
-					<p>in Turtle, and</p>
+                <p>in Turtle, and</p>
 
-					<pre class=nohighlight>
+                <pre class=nohighlight>
 						"ex:example" : {
 						    "@value" : "<bdo dir="ltr">\u200F&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>",
 						    "@language" : "he"
 						}
 					</pre>
 
-					<p>in JSON-LD.</p>
-				</section>
-	
+                <p>in JSON-LD.</p>
+            </section>
 
-				<section>
-					<h2>Pros and Cons</h2>
 
-					<p>
-						The major advantage of this approach is that there is no specification work to be done on the RDF, JSON, etc., side.
-					</p>
+            <section>
+                <h2>Pros and Cons</h2>
 
-					<p>
-						The major disadvantage is that this approach requires a change of the core string data that relies on some additional expertise. See <a data-cite="string-meta#issues-1">the relevant set of problems</a> in&nbsp;[[string-meta]] that are closely related to this approach.
-					</p>
-					<p>
-						Also, just as for <a href="#extending-bcp"></a> and <a href="#private-tag"></a>, the interplay between current data deployment and the assignment of such extra formatting characters may not be obvious. Although <a href="https://github.com/w3c/rdf-dir-literal/issues/7#issuecomment-497337353">the issue comment</a> and the <a href="https://github.com/w3c/rdf-dir-literal/wiki/Draft-ideas-related-to-string-metadata-storage-options">separate Wiki</a> page outline the problems for the case when the language tags are used, the same considerations apply to this approach as well. 
-					</p>
-				</section>
-			</section>
-		</section>
+                <p>
+                    The major advantage of this approach is that there is no specification work to be done on the RDF, JSON, etc., side.
+                </p>
 
-		<section class=appendix>
-			<h2>Acknowledgement</h2>
+                <p>
+                    The major disadvantage is that this approach requires a change of the string data proper; a change that relies on some additional expertise the author/editor/etc of that data does not necessarily have. See also <a data-cite="string-meta#issues-1">the relevant set of problems</a> in&nbsp;[[string-meta]] that
+                    are closely related to this approach.
+                </p>
+                <p>
+                    Also, just as for
+                    <a href="#extending-bcp"></a> and
+                    <a href="#private-tag"></a>, the interplay between current data deployment and the assignment of such extra formatting characters may not be obvious. Although <a href="https://github.com/w3c/rdf-dir-literal/issues/7#issuecomment-497337353">the issue comment</a>                    and the <a href="https://github.com/w3c/rdf-dir-literal/wiki/Draft-ideas-related-to-string-metadata-storage-options">separate Wiki</a> page outline the problems for the case when the language tags are used, the same considerations
+                    apply to this approach as well.
+                </p>
+            </section>
+        </section>
+    </section>
 
-			<p>These ideas are not of my own only. This is the result of a series of discussions, email contributions, etc, of a number of people, including Manu Sporny, Pierre-Antoine Champin, Gregg Kellogg, David Longley, Rob Sanderson, Benjamin Young, Charles Neville, Richard Ishida, Addison Philips, Martin Dürst, and Mark Davis.</p>
-		</section>
+    <section class=appendix>
+        <h2>Acknowledgements</h2>
+        <p>
+            This document is a synopsis of a series of discussions, email contributions, etc., of a number of people, including Manu Sporny, Pierre-Antoine Champin, Gregg Kellogg, David Longley, Rob Sanderson, Benjamin Young, Charles Neville, Richard Ishida, Addison
+            Philips, Martin Dürst, and Mark Davis.
+        </p>
+    </section>
 
-	</body>
+</body>
+
 </html>
