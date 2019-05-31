@@ -46,5 +46,14 @@ var biblio = {
         "date": "2016-08-09",
         "href" : "https://www.w3.org/International/articles/uba-basics/",
         "publisher" : "W3C"        
+    },
+    "d-langtag" : {
+        "title" : "BCP 47 Extension D",
+        "authors" : [
+            "Many Sporny"
+        ],
+        "date": "2019-05-25",
+        "href": "https://tools.ietf.org/html/draft-msporny-d-langtag-ext-00",
+        "publisher": "IETF"
     }
 }
