@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+	<head>
+		<meta charset="utf-8" />
+		<title>Modification of “langString” in the RDF 1.1 Concepts document</title>
+		<script src="biblio.js" class="remove"></script>
+		<script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove" defer></script>
+		<script class="remove">
+			var respecConfig = {
+				specStatus: "base",
+				shortName: "langString",
+				noRecTrack: true,
+				// previousPublishDate: "2017-01-04",
+				// previousMaturity: "WD",
+				// edDraftURI: "https://w3c.github.io/pwpub/",
+				editors: [
+				{
+                    "name": "Ivan Herman",
+                    "url": "https://www.w3.org/People/Ivan/",
+                    "company": "W3C",
+					"w3cid": 7382,
+					"orcid": "0000-0003-0782-2704",
+                    "companyURL": "https://www.w3.org",
+                }],
+				processVersion:    2018,
+				includePermalinks: true,
+              	permalinkEdge:     true,
+              	permalinkHide:     false,
+				diffTool:          "http://www.aptest.com/standards/htmldiff/htmldiff.pl",
+				wgURI:             "https://www.w3.org/publishing/groups/publ-wg/",
+				license: 		   "w3c-software-doc",
+				github:			 {
+  				  	repoURL: "https://github.com/w3c/rdf-dir-literal/",
+  				  	branch: "master"
+   			    },
+				localBiblio: biblio
+			};
+		</script>
+		<style>
+			.add {
+				background: yellow;
+			}
+			.delete {
+				text-decoration: line-through;
+				background: greenyellow;
+			}
+		</style>
+	</head>
+	<body>
+		<section id="abstract">
+			<p>
+				This is the draft of the necessary modification of [[rdf11-concepts]] in case the approach is to extend the current <code>langString</code> built-in literal. See <a href="./#extending-lang-string">the core document</a> for further details.
+			</p>
+		</section>
+		<section id="sotd"></section>
+
+		<section id=concept-modifications>
+			<h2>Modification of <code>langString</code> in the RDF 1.1 Concepts document</h2>
+
+			<p>
+				The current definition for <code>langString</code> is in <a data-cite="!rdf11-concepts#section-Graph-Literal">section 3.3</a> of the RDF 1.1 document. The subsection below proposes a replacement for that sections, with the changes highlighted.
+			</p>
+
+			<section>
+				<h2>Literals</h2>
+
+				<p>Literals are used for values such as strings, numbers, and dates.</p>
+
+				<p>
+					A <dfn>literal</dfn> in an <a href="#dfn-rdf-graph" class="internalDFN">RDF graph</a> consists of two or <span class=delete>three</span><span class=add>four</span> elements:
+				</p>
+			
+				<ul>
+					<li>
+						a <dfn>lexical form</dfn>, being a Unicode [[UNICODE]] string, which SHOULD be in Normal Form C&nbsp;[[nfc]],
+					</li>
+
+					<li>
+						a <dfn>datatype [[iri]], being an <a title="IRI" href="#dfn-iri" class="internalDFN"><abbr title="Internationalized Resource Identifier">IRI</abbr></a> identifying a datatype that determines how the lexical form maps to a <a href="#dfn-literal-value" class="internalDFN">literal value</a>, and
+					</li>
+
+					<li>
+						if and only if the <a href="#dfn-datatype-iri" class="internalDFN">datatype <abbr title="Internationalized Resource Identifier">IRI</abbr></a> is <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#langString</code>, a non-empty <dfn>language tag</dfn> as defined by&nbsp;[[bcp47]]<span class=add>, and a non-empty <dfn>base direction tag</dfn></span>. The language tag MUST be well-formed according to <a href="http://tools.ietf.org/html/bcp47#section-2.2.9">section 2.2.9</a> of [[BCP47]]. <span class=add>The base direction tag MUST have the value of <code>ltr</code>, <code>rtl</code>, or <code>auto</code>, semantically defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]</span>.
+					</li>
+				</ul>
+			
+				<p>
+					A literal is a <dfn id="dfn-language-tagged-string">language-tagged string</dfn> if the third <span class='add'>fourth</span> element<span class=add>s</span> <span class=delete>is</span><span class=add>are</span> present. Lexical representations of language tags <em class="rfc2119" title="MAY">MAY</em> be converted to lower case. The value space of language tags is always in lower case. 
+				</p>
+
+				<p class="note add">
+					The value of <code>auto</code> for the <a>base direction tag</a> represents a default behavior for the rendering of bidirectional texts, and can be used by concrete syntaxes as a “default” value.
+				</p>
+			
+				<p>		
+					Please note that concrete syntaxes MAY support <dfn>simple literals</dfn> consisting of only a <a href="#dfn-lexical-form" class="internalDFN">lexical form</a> without any <a href="#dfn-datatype-iri" class="internalDFN">datatype <abbr title="Internationalized Resource Identifier">IRI</abbr></a><span class=delete> or</span><span class=add>,</span> <a>language tag</a> <span class=add>, or <a>base direction tag</a></span>. Simple literals are syntactic sugar for abstract syntax <a>literals</a> with the <a href="#dfn-datatype-iri" class="internalDFN">datatype <abbr title="Internationalized Resource Identifier">IRI</abbr></a> <code>http://www.w3.org/2001/XMLSchema#string</code>. Similarly, most concrete syntaxes represent <a title="language-tagged string" href="#dfn-language-tagged-string" class="internalDFN">language-tagged strings</a> without the <a href="#dfn-datatype-iri" class="internalDFN">datatype <abbr title="Internationalized Resource Identifier">IRI</abbr></a> because it always equals <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#langString</code>.
+				</p>
+			
+				<p>The <dfn id="dfn-literal-value">literal value</dfn> associated with a <a href="#dfn-literal" class="internalDFN">literal</a> is:</p>
+			
+				<ol>
+					<li>If the literal is a <a>language-tagged string</a>,
+					then the literal value is a <span class=delete>pair</span><span class=add>triple</span> consisting of its <a href="#dfn-lexical-form" class="internalDFN">lexical form</a>
+					<span class=delete>and</span><span class=add>, </span> its <a>language tag</a>, <span class=add>and its <a>base direction tag</a>,</span> in that order.</li>
+			
+					<li>If the literal's <a href="#dfn-datatype-iri" class="internalDFN">datatype <abbr title="Internationalized Resource Identifier">IRI</abbr></a> is in the set of
+					<a href="#dfn-recognized-datatype-iris" class="internalDFN">recognized datatype IRIs</a>, let <var>d</var> be the
+					<a href="#dfn-referent" class="internalDFN">referent</a> of the datatype <abbr title="Internationalized Resource Identifier">IRI</abbr>.
+					<ol>
+						<li>If the literal's <a href="#dfn-lexical-form" class="internalDFN">lexical form</a> is in the <a href="#dfn-lexical-space" class="internalDFN">lexical space</a>
+						of <var>d</var>, then the literal value is the result of applying
+						the <a href="#dfn-lexical-to-value-mapping" class="internalDFN">lexical-to-value mapping</a> of <var>d</var> to the
+						<a href="#dfn-lexical-form" class="internalDFN">lexical form</a>.</li>
+						<li>Otherwise, the literal is ill-typed and no literal value can be
+						 associated with the literal. Such a case produces a semantic
+						 inconsistency but is not <em>syntactically</em> ill-formed.
+						 Implementations MUST accept ill-typed literals and produce RDF
+						 graphs from them. Implementations MAY produce warnings when
+						 encountering ill-typed literals.</li>
+					</ol>
+					</li>
+					<li>If the literal's <a href="#dfn-datatype-iri" class="internalDFN">datatype <abbr title="Internationalized Resource Identifier">IRI</abbr></a> is <em>not</em> in the set of
+					<a href="#dfn-recognized-datatype-iris" class="internalDFN">recognized datatype IRIs</a>, then the literal value is
+					not defined by this specification.</li>
+				</ol>
+			
+				<p>
+					<dfn id="dfn-literal-term-equality">Literal term equality</dfn>: Two literals are term-equal (the same RDF literal) if and only if the two <a title="lexical form" href="#dfn-lexical-form" class="internalDFN">lexical forms</a>, the two <a title="datatype IRI" href="#dfn-datatype-iri" class="internalDFN">datatype IRIs</a>, and the two <a title="language tag" href="#dfn-language-tag" class="internalDFN">language tags</a> and <span class=add><a>base direction tags</a></span> (if any) compare equal, character by character. Thus, two literals can have the same value without being the same RDF term. For example:
+				</p>
+			
+				<pre>      &quot;1&quot;^^xs:integer
+					&quot;01&quot;^^xs:integer
+				</pre>
+			
+				<p>denote the same <a title="literal value" href="#dfn-literal-value" class="internalDFN">value</a>, but are not the
+					same literal <a title="RDF Term" href="#dfn-rdf-term" class="internalDFN">RDF terms</a> and are not
+					<a title="literal term equality" href="#dfn-literal-term-equality" class="internalDFN">term-equal</a> because their
+					<a href="#dfn-lexical-form" class="internalDFN">lexical form</a> differs.</p>
+			</section>
+	    </section>
+
+	</body>
+</html>
