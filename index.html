@@ -389,25 +389,39 @@
             <h2>Rely on current BCP47 only</h2>
 
             <p>
-				A different approach stems from the observation that the current BCP-47 can be used, unchanged, to express the necessary base direction using, if necessary, the “script” subtag. For example, the tag <code>he-Hebr</code> reinforces, through the presence of the <code>Hebr</code> subtag, that the language is not only Hebrew, but the string uses the Hebrew script, i.e., it <em>is</em> right-to-left. In other words:
-			</p>
+                A different approach stems from the observation that the current BCP-47 can be used, unchanged, to express the necessary base direction using, <em>if necessary</em>, the “script” subtag. The latter is necessary if the language itself does not uniquely identify the script (and, in consequence, the base direction) of the text. This is the case, for example, for Azerbaijani, that may have Arabic, Cyrillic, and Latin scripts. However, the combination of these two information, plus the basic algorithms defined for UNICODE, has the necessary information. For example, </p>
 
             <pre class=nohighlight>
-					[] ex:example "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>"@he-Hebr .
-				</pre>
+                "ex:example" : {
+                    "@value" : "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>",
+                    "@language" : "he"
+                }
+            </pre>
 
-            <p>or</p>
+            <p>does, in fact, include the necessary information to deduce the rigth-to-left nature of the text by virtue of declaring the text to be in Hebrew, whereas in</p>
 
             <pre class=nohighlight>
-					"ex:example" : {
-					    "@value" : "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>",
-					    "@language" : "he-Hebr"
-					}
-				</pre>
+                [] ex:example "<bdo dir="ltr">آذربايجانجا ديلي</bdo>"@az-Arab ; "Азәрбајҹан дили"@az-Cyrl .
+			</pre>
 
-            <p>
-                would take care of all possible ambiguities, and no further directional information is necessary. As a consequence, from an RDF, JSON-LD, Turtle, etc., specification point of view, no other action has to be taken (although a good best practices documentation may be necessary on the usage of this subtag).
-            </p>
+            <p>both strings need the extra information on script. However, <em>the two together</em> have enough information for the base direction.</p>
+
+            <p>Mark Davis, in his <a href="https://github.com/w3c/rdf-dir-literal/issues/7#issuecomment-498268872">github comment</a>, formalizes the approach further on what a user agent should do:</p>
+
+            <ol>
+                <li>If there is language information, use that to get the base direction.
+                    <ol>
+                        <li>if there is an explicit script, use it.</li>
+                        <li>otherwise, infer it from the language</li>
+                    </ol>
+                </li>
+                <li>
+                    If there is no language information, use standard BIDI algorithm (first strong) to get the base direction.
+                </li>
+            </ol>
+ 
+            <p>(This is also based on the observation that there is only a handful of scripts for right-to-left, and a small number of languages that use right-to-left as a base direction even without the script subtag.)</p>
+
 
             <section>
                 <h2>Pros and Cons</h2>
@@ -427,6 +441,10 @@
 
             <p>
                 The base direction of a string may also be controlled by the Unicode formatting characters U+200E LEFT-TO-RIGHT MARK or U+200F RIGHT-TO-LEFT MARK. This means that user agents receiving such a string could identify the base direction of any given natural language value by scanning the text for the first strong directional character that may include these formatting characters; no further information is strictly necessary. (See, e.g., the <a href="https://w3c.github.io/wpub/#app-bidi-examples">Web Publication draft</a>&nbsp;[[wpub]] for some examples.)
+            </p>
+
+            <p>
+                Note that this approach may be part of the previous approach, insofar as the usage of the formatting characters are integral part of the standard BIDI algorithm used in the possible processing step described in <a href="cript-subtag"></a>
             </p>
 
             <section>
