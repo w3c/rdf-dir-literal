@@ -75,7 +75,7 @@
     <main>
       <h1 id="title">RDF Literal Direction Working Group Charter</h1>
 
-      <p class="mission">The <strong>mission</strong> of the <a href="">RDF Literal Direction Working Group</a> is to add base direction metadata to language tagged literals.</p>
+      <p class="mission">The <strong>mission</strong> of the <a href="">RDF Literal Direction Working Group</a> is to add base direction metadata to RDF language tagged literals.</p>
 
       <div class="noprint">
         <p class="join"><a href="https://www.w3.org/2004/01/pp-impl/#####/join">Join the Working Group.</a></p>
@@ -100,7 +100,7 @@
               End date
             </th>
             <td>
-              31 December 2020
+              01 April 2021
             </td>
           </tr>
 
@@ -144,22 +144,43 @@
       <section id="scope" class="scope">
         <h2>Scope</h2>
         <p>
-        There is a problem at the intersection of RDF Literals and internationalization. When using string Literals for natural language texts, the <a href="https://www.w3.org/rdf11-concepts#section-Graph-Literal"><code>langString</code> datatype</a> of RDF 1.1 provides the possibility to add the language information via a <a href="https://tools.ietf.org/html/bcp47">bcp47</a> language tag. However, it is not possible to express the <em>base text direction</em> (i.e., right-to-left or left-to-right) of the same literal. While this issue is solved in HTML through the <a href="https://www.w3.org/TR/html/dom.html#the-dir-attribute"><code>dir</code> attribute</a>, and can be done when defining, e.g., a set of terms in simple JSON, this is not possible in the abstract model of RDF and, consequently, in the serialization syntaxes of RDF like <a href="https://www.w3.org/turtle">Turtle</a> or <a href="https://www.w3.org/TR/json-ld/">JSON-LD</a>. See a <a href="https://w3c.github.io/rdf-dir-literal/">separate document</a>, and the corresponding <a href="https://github.com/w3c/rdf-dir-literal/issues?q=is%3Aissue+is%3Aopen+label%3A%22preliminary+discussions%22">github issues</a>, for a more detailed description of the problem and the possible solutions that have also been explored.
+        There is a problem at the intersection of RDF Literals and internationalization. When using string Literals for natural language texts, the <a href="https://www.w3.org/rdf11-concepts#section-Graph-Literal"><code>langString</code> datatype</a> of RDF 1.1 provides the possibility to add the language information via a <a href="https://tools.ietf.org/html/bcp47">bcp47</a> language tag. However, it is not possible to express the <em>base text direction</em> (i.e., right-to-left or left-to-right) of the same literal. While this issue is solved in HTML through the <a href="https://www.w3.org/TR/html/dom.html#the-dir-attribute"><code>dir</code> attribute</a>, and can be done when defining, e.g., a set of terms in simple JSON, this is not possible in the abstract model of RDF and, consequently, in the serialization syntaxes of RDF like <a href="https://www.w3.org/turtle">Turtle</a> or <a href="https://www.w3.org/TR/json-ld/">JSON-LD</a>. See a <a href="https://w3c.github.io/rdf-dir-literal/">separate document</a>, and the corresponding <a href="https://github.com/w3c/rdf-dir-literal/issues?q=is%3Aissue+is%3Aopen+label%3A%22preliminary+discussions%22">github issues</a>, for a more detailed description of the problem as well as the possible solutions that have been explored.
       </p>
 
-      <p>This Working Group will update the RDF 1.1 family of specification (including the serializations syntaxes), as well as the SPARQL 1.1 family of specifications to include a base direction information for the <a href="https://www.w3.org/rdf11-concepts#section-Graph-Literal"><code>langString</code> datatype</a>. This change will be strictly backward compatible, i.e., all RDF 1.1 Graphs, containing triples with language tags literals, will remain valid, and all SPARQL 1.1 queries involving such graphs will return the same query results.</p>
+      <p>This Working Group will update the RDF 1.1 family of specification (including the serializations syntaxes), as well as the SPARQL 1.1 and RDFa 1.1 families of specifications to include a base direction information for the <a href="https://www.w3.org/rdf11-concepts#section-Graph-Literal"><code>langString</code> datatype</a> (see <a href="#deliverable-list">list of specifications below</a>). These changes must be backward compatible, i.e.,</p>
 
-      <p><em>Editorial</em> errata for <a href="https://www.w3.org/2001/sw/wiki/RDF1.1_Errata">RDF 1.1</a> as well as for <a href="https://www.w3.org/2013/sparql-errata">SPARQL 1.1</a> will also be handled by the Working Group.</p>
+      <ul>
+        <li>all RDF 1.1 Graphs, containing triples with language tags literals, remain valid and with the same semantics;</li>
+        <li>all SPARQL 1.1 queries involving RDF 1.1 graphs will return the same query results;</li>
+        <li>all HTML and XML files with RDFa 1.1 markup will produce identical RDF Graphs.</li>
+      </ul>
+
+      <aside class="todo">These bullet points probably need a more precise formulation.</aside>
+     
+
+      <p><em>Editorial</em> errata for <a href="https://www.w3.org/2001/sw/wiki/RDF1.1_Errata">RDF 1.1</a>, <a href="https://www.w3.org/2013/sparql-errata">SPARQL 1.1</a>, and <a href="https://www.w3.org/2001/sw/wiki/RDFa_1.1._Errata">RDFa 1.1</a> will also be handled by the Working Group.</p>
+
+      <p class="todo">What about <a href="http://www.w3.org/TR/r2rml/">r2rml</a>? This depend on whether direction can be expressed in SQL. If so, then it should be added to the list.</p>
 
         <section id="section-out-of-scope">
           <h3 id="out-of-scope">Out of Scope</h3>
-            <p>This Working Group does <em>not</em> work on any other technical improvements of the current RDF standard family (i.e., RDF 1.1, RDF serialization syntaxes, or SPARQL).</p>
+            <ul>
+              <li>any <em>other</em> technical improvements or changes on the documents listed in the <a href="#deliverable-list">list of specifications below</a></li>
+              <li>changes on the OWL family of specification</li>
+            </ul>
+
+        <aside class="todo">It may be that there are, in fact, no effects on OWL, in which case there is no need to even mention it here… To be checked.</aside>
         </section>
 
         <section id="success-criteria">
           <h3>Success Criteria</h3>
-          <p>In order to advance to <a href="https://www.w3.org/Consortium/Process/#RecsPR" title="Proposed Recommendation">Proposed Recommendation</a>, each specification is expected to have <a href="https://www.w3.org/Consortium/Process/#implementation-experience">at least two independent implementations</a> of each of feature defined in the specification.</p>
+
+          <p>In order to advance to <a href="https://www.w3.org/Consortium/Process/#RecsPR" title="Proposed Recommendation">Proposed Recommendation</a>, each specification is expected to have <a href="https://www.w3.org/Consortium/Process/#implementation-experience">at least two independent implementations</a> regarding the base direction defined on language tagged Literals, when applicable (i.e., if the new specifications differ from the previous versions in more than just editorial changes).</p>
+
           <p>Each specification should contain a section detailing all known security and privacy implications for implementers, Web authors, and end users.</p>
+
+          <aside class="todo">It is not expected to have security/privacy implication of adding the base direction to literals. Maybe it is worth removing the previous paragraph?</aside>
+
           <p>There should be testing plans for each specification, starting from the earliest drafts.</p>
  
         </section>
@@ -172,7 +193,7 @@
 
         <p>More detailed milestones and updated publication schedules are available on the <a href="https://www.w3.org/[groupname]/PubStatus">group publication status page</a>.</p>
 
-        <p><i>Draft state</i> indicates the state of the deliverable at the time of the charter approval. <i>Expected completion</i> indicates when the deliverable is projected to become a Recommendation, or otherwise reach a stable state.</p>
+        <p>The list below uses “RDF 1.2”, “SPARQL 1.2”, and “RDFa 1.2”, respectively, to designate the new releases; this should be considered as indicative only. It will be the decision of the Working Group to decide on the final version numbers.</p>
 
         <section id="normative">
           <h3>
@@ -182,50 +203,55 @@
             The Working Group will deliver the following <em>updated</em> specifications containing the new version of the <a href="https://www.w3.org/rdf11-concepts#section-Graph-Literal"><code>langString</code> datatype</a>:
           </p>
           <dl id="deliverable-list">
-            <dt id="rdf11-concepts" class="spec"><a href="http://www.w3.org/TR/rdf11-concepts/">RDF 1.1 Concepts and Abstract Syntax</a></dt>
+            <dt id="rdf11" class="spec">RDF 1.2</dt>
             <dd>
-              <p>This document defines an abstract syntax (a data model) which serves to link all RDF-based languages and specifications.</p>
-
-              <p class="draft-status"><b>Current state:</b> <a href="https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/">Recommendation</a></p>
-              <p class="milestone"><b>Expected completion:</b> Q4 2020</p>
+               This term refers to a family of documents, published in 2014. The current list comprises:
+               <ul>
+                 <li><a href="https://www.w3.org/TR/2014/REC-rdf11-concepts-20140225/">RDF 1.1 Concepts and Abstract Syntax</a></li>
+                 <li><a href="http://www.w3.org/TR/2014/REC-rdf11-mt-20140225/">RDF 1.1 Semantics</a></li>
+                 <li><a href="http://www.w3.org/TR/2014/REC-rdf-schema-20140225/">RDF Schema 1.1</a></li>
+                 <li><a href="http://www.w3.org/TR/2014/REC-turtle-20140225/">RDF 1.1 Turtle</a></li>
+                 <li><a href="http://www.w3.org/TR/2014/REC-trig-20140225/">RDF 1.1 TriG</a></li>
+                 <li><a href="http://www.w3.org/TR/2014/REC-n-triples-20140225/">RDF 1.1 N-Triples</a></li>
+                 <li><a href="http://www.w3.org/TR/2014/REC-n-quads-20140225/">RDF 1.1 N-Quads</a></li>
+                 <li><a href="http://www.w3.org/TR/2014/REC-rdf-syntax-grammar-20140225/">RDF 1.2 XML Syntax</a></li>
+               </ul>
             </dd>
 
-            <dt id="rdf11-mt" class="spec"><a href="http://www.w3.org/TR/rdf11-mt/">RDF 1.1 Semantics</a></dt>
+            <dt id="rdf11" class="spec">SPARQL 1.2</dt>
             <dd>
-              <p>This document describes a precise semantics for the Resource Description Framework 1.1 and RDF Schema. </p>
-
-              <p class="draft-status"><b>Current state:</b> <a href="http://www.w3.org/TR/2014/REC-rdf11-mt-20140225/">Recommendation</a></p>
-              <p class="milestone"><b>Expected completion:</b> Q4 2020</p>
-            </dd>
-
-            <dt id="rdf-schema" class="spec"><a href="http://www.w3.org/TR/rdf-schema/">RDF Schema 1.1</a></dt>
+               This term refers to a family of documents, published in 2013. The current list comprises:
+               <ul>
+                 <li><a href="http://www.w3.org/TR/2013/REC-sparql11-overview-20130321/">SPARQL 1.1 Overview</a></li>
+                 <li><a href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/">SPARQL 1.1 Query Language</a></li>
+                 <li><a href="http://www.w3.org/TR/2013/REC-sparql11-update-20130321/">SPARQL 1.1 Update</a></li>
+                 <li><a href="http://www.w3.org/TR/2013/REC-sparql11-service-description-20130321/">SPARQL 1.1 Service Description</a></li>
+                 <li><a href="http://www.w3.org/TR/2013/REC-sparql11-federated-query-20130321/">SPARQL 1.1 Federated Query</a></li>
+                 <li><a href="https://www.w3.org/TR/2013/REC-sparql11-results-json-20130321/">SPARQL 1.1 Query Results JSON Format</a></li>
+                 <li><a href="https://www.w3.org/TR/2013/REC-sparql11-results-csv-tsv-20130321/">SPARQL 1.1 Query Results CSV and TSV Formats</a></li>
+                 <li><a href="http://www.w3.org/TR/2013/REC-rdf-sparql-XMLres-20130321/">SPARQL Query Results XML Format (Second Edition)</a></li>
+                 <li><a href="http://www.w3.org/TR/2013/REC-sparql11-entailment-20130321/">SPARQL 1.1 Entailment Regimes</a></li>
+                 <li><a href="http://www.w3.org/TR/2013/REC-sparql11-entailment-20130321/">SPARQL 1.1 Entailment Regimes</a></li>
+                 <li><a href="http://www.w3.org/TR/2013/REC-sparql11-protocol-20130321/">SPARQL 1.1 Protocol</a></li>
+                 <li><a href="http://www.w3.org/TR/2013/REC-sparql11-http-rdf-update-20130321/">SPARQL 1.1 Graph Store HTTP Protocol</a></li>
+                </ul>
+              </dd>
+            <dt id="rdf11" class="spec">RDFa 1.2</dt>
             <dd>
-              <p>RDF Schema provides a data-modelling vocabulary for RDF data. RDF Schema is an extension of the basic RDF vocabulary.</p>
-
-              <p class="draft-status"><b>Current state:</b> <a href="http://www.w3.org/TR/2014/REC-rdf-schema-20140225/">Recommendation</a></p>
-              <p class="milestone"><b>Expected completion:</b> Q4 2020</p>
+               This term refers to a family of documents, published in 2015. The current list comprises:
+               <ul>
+                 <li><a href="http://www.w3.org/TR/2015/REC-rdfa-core-20150317/">RDFa Core 1.1 - Third Edition</a></li>
+                 <li><a href="http://www.w3.org/TR/2015/REC-html-rdfa-20150317/">HTML+RDFa 1.1 - Second Edition</a></li>
+                 <li><a href="http://www.w3.org/TR/2015/REC-xhtml-rdfa-20150317/">XHTML+RDFa 1.1 - Third Edition</a></li>
+                 <li><a href="http://www.w3.org/TR/2015/REC-rdfa-lite-20150317/">RDFa Lite 1.1 - Second Edition</a></li>
+               </ul>
             </dd>
-
-            <dt id="turtle" class="spec"><a href="http://www.w3.org/TR/turtle/">RDF 1.1 Turtle</a></dt>
-            <dd>
-              <p>This document defines a textual syntax for RDF called Turtle that allows an RDF graph to be completely written in a compact and natural text form.</p>
-
-              <p class="draft-status"><b>Current state:</b> <a href="http://www.w3.org/TR/2014/REC-turtle-20140225/">Recommendation</a></p>
-              <p class="milestone"><b>Expected completion:</b> Q4 2020</p>
-            </dd>
-
-            <dt id="trig" class="spec"><a href="http://www.w3.org/TR/trig/">RDF 1.1 TriG</a></dt>
-            <dd>
-              <p>This document defines a textual syntax for RDF called TriG that allows an RDF dataset to be completely written in a compact and natural text form.</p>
-
-              <p class="draft-status"><b>Current state:</b> <a href="http://www.w3.org/TR/2014/REC-trig-20140225/">Recommendation</a></p>
-              <p class="milestone"><b>Expected completion:</b> Q4 2020</p>
-            </dd>
-
 
           </dl>
 
-          <p>Note: some of these specifications may not have to change. They may be republished to be in line, editorially and with the right version names, with the updated specifications.</p>
+          <p>
+            Note: most of these specifications may need no change, strictly speaking (i.e., there are no editorial errata, and the addition of the base direction to a literal does not affect the technical content). They should nevertheless be republished to be in line, editorially and with the right version names, with the updated specifications.
+          </p>
         </section>
 
         <section id="ig-other-deliverables">
@@ -249,13 +275,11 @@
               <li>October 2019: First teleconference</li>
               <li>December 2019: FPWD for all the specifications listed <a href="#deliverable-list">above</a></li>
               <li>March 2020: CR for all the specifications listed <a href="#deliverable-list">above</a></li>
-              <li>November 2020: PR for all the specifications listed <a href="#deliverable-list">above</a></li>
-              <li>December 2020: Recommendations for all the specifications listed <a href="#deliverable-list">above</a></li>
+              <li>January 2021: PR for all the specifications listed <a href="#deliverable-list">above</a></li>
+              <li>March 2021: Recommendations for all the specifications listed <a href="#deliverable-list">above</a></li>
             </ul>
         </section>
       </section>
-
-
 
       <section id="coordination">
         <h2>Coordination</h2>
