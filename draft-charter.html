@@ -43,6 +43,12 @@
         font-size: small;
       }
 
+      aside.comment {
+        color: #900;
+        background: oldlace;
+        border: 1px solid black;
+        padding:  0.5em;
+      }
       body {	 
           background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 100' width='100%' height='50%' opacity='.08'> <g transform='translate(73,45) rotate(-40)'> <rect fill='none' stroke='red' stroke-width='2' width='120' x='-60' y='3' height='20' rx='10' ry='10'/> <text x='0' y='20' font-family='sans-serif' font-size='14' fill='red' text-anchor='middle'>Early Draft</text> </g> </svg>");
           background-position: top center;	 
@@ -155,21 +161,21 @@
         <li>all HTML and XML files with RDFa 1.1 markup will produce identical RDF Graphs.</li>
       </ul>
 
-      <aside class="todo">These bullet points probably need a more precise formulation.</aside>
+      <aside class="comment">These bullet points probably need a more precise formulation.</aside>
      
 
       <p><em>Editorial</em> errata for <a href="https://www.w3.org/2001/sw/wiki/RDF1.1_Errata">RDF 1.1</a>, <a href="https://www.w3.org/2013/sparql-errata">SPARQL 1.1</a>, and <a href="https://www.w3.org/2001/sw/wiki/RDFa_1.1._Errata">RDFa 1.1</a> will also be handled by the Working Group.</p>
 
-      <p class="todo">What about <a href="http://www.w3.org/TR/r2rml/">r2rml</a>? This depend on whether direction can be expressed in SQL. If so, then it should be added to the list.</p>
+      <aside class="comment">What about <a href="http://www.w3.org/TR/r2rml/">r2rml</a>? This depend on whether direction can be expressed in SQL. If so, then it should be added to the list.</aside>
 
         <section id="section-out-of-scope">
           <h3 id="out-of-scope">Out of Scope</h3>
             <ul>
-              <li>any <em>other</em> technical improvements or changes on the documents listed in the <a href="#deliverable-list">list of specifications below</a></li>
-              <li>changes on the OWL family of specification</li>
+              <li>Any <em>other</em> technical improvements or changes on the documents listed in the <a href="#deliverable-list">list of specifications below</a>.</li>
+              <li>Changes on the OWL family of specification.</li>
             </ul>
 
-        <aside class="todo">It may be that there are, in fact, no effects on OWL, in which case there is no need to even mention it here… To be checked.</aside>
+        <aside class="comment">It may be that there are, in fact, no effects on OWL, in which case there is no need to even mention it here… To be checked.</aside>
         </section>
 
         <section id="success-criteria">
@@ -179,7 +185,7 @@
 
           <p>Each specification should contain a section detailing all known security and privacy implications for implementers, Web authors, and end users.</p>
 
-          <aside class="todo">It is not expected to have security/privacy implication of adding the base direction to literals. Maybe it is worth removing the previous paragraph?</aside>
+          <aside class="comment">It is not expected to have security/privacy implication of adding the base direction to literals. Maybe it is worth removing the previous paragraph?</aside>
 
           <p>There should be testing plans for each specification, starting from the earliest drafts.</p>
  
@@ -343,7 +349,7 @@
         </p>
         <p>
           This group primarily conducts its technical work  on the public mailing list <a class="todo" id="public-name" href="mailto:public-[email-list]@w3.org">public-<i class="todo">[email-list]</i>@w3.org</a> (<a class="todo" href="https://lists.w3.org/Archives/Public/public-[email-list]/">archive</a>) and on
-          <i class="todo">or</i> on <a class="todo" id="public-github" href="[link to Github repo]">GitHub issues</a>.
+           <a class="todo" id="public-github" href="[link to Github repo]">GitHub issues</a>.
           The public is invited to review, discuss and contribute to this work.
         </p>
         <p>
@@ -407,12 +413,13 @@
         <p>
           This charter has been created according to <a href="https://www.w3.org/Consortium/Process/#GAGeneral">section 5.2</a> of the <a href="https://www.w3.org/Consortium/Process/">Process Document</a>. In the event of a conflict between this document or the provisions of any charter and the W3C Process, the W3C Process shall take precedence.
         </p>
-
+        
+<!-- 
         <section id="history">
           <h3>
             Charter History
           </h3>
-<!-- 
+
           <p>The following table lists details of all changes from the initial charter, per the <a href="https://www.w3.org/Consortium/Process/#CharterReview">W3C Process Document (section 5.2.3)</a>:</p>
 
           <table class="history">
