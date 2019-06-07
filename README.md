@@ -2,6 +2,8 @@ Musings on adding base direction to RDF Literals.
 
 See the readable [version](https://w3c.github.io/rdf-dir-literal/).
 
+Based on the way the discussions went, there is now a [charter draft](https://w3c.github.io/rdf-dir-literal/draft-charter.html) for a possible Working Group. (See also [related issues](https://github.com/w3c/rdf-dir-literal/issues?q=is%3Aissue+is%3Aopen+label%3A%22charter+draft%22).)
+
 # Minutes of discussions
 
 * 2019-05-29: https://www.w3.org/2019/05/29-i18n-minutes.html
