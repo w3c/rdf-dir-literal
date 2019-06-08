@@ -153,7 +153,7 @@
         There is a problem at the intersection of RDF Literals and internationalization. When using string Literals for natural language texts, the <a href="https://www.w3.org/TR/rdf11-concepts#section-Graph-Literal"><code>langString</code> datatype</a> of RDF 1.1 provides the possibility to add the language information via a <a href="https://tools.ietf.org/html/bcp47">bcp47</a> language tag. However, it is not possible to express the <em>base text direction</em> (i.e., right-to-left or left-to-right) of the same literal. While this issue is solved in HTML through the <a href="https://www.w3.org/TR/html/dom.html#the-dir-attribute"><code>dir</code> attribute</a>, and can be done when defining, e.g., a set of terms in simple JSON, this is not possible in the abstract model of RDF and, consequently, in the serialization syntaxes of RDF like <a href="https://www.w3.org/TR/turtle">Turtle</a> or <a href="https://www.w3.org/TR/json-ld/">JSON-LD</a>. See a <a href="https://w3c.github.io/rdf-dir-literal/">separate document</a>, and the corresponding <a href="https://github.com/w3c/rdf-dir-literal/issues?q=is%3Aissue+is%3Aopen+label%3A%22preliminary+discussions%22">github issues</a>, for a more detailed description of the problem as well as the possible solutions that have been explored.
       </p>
 
-      <p>This Working Group will update the RDF 1.1 family of specification (including the serializations syntaxes), as well as the SPARQL 1.1, SHACL, CSVW, and RDFa 1.1 families of specifications to include a base direction information for the <a href="https://www.w3.org/rdf11-concepts#section-Graph-Literal"><code>langString</code> datatype</a> (see <a href="#deliverable-list">list of specifications below</a>). These changes must be backward compatible, i.e.,</p>
+      <p>This Working Group will update the RDF 1.1 family of specification (including the serializations syntaxes), as well as the RDFa 1.1, SPARQL 1.1, SHACL,and CSVW families of specifications to include a base direction information for the <a href="https://www.w3.org/rdf11-concepts#section-Graph-Literal"><code>langString</code> datatype</a> (see <a href="#deliverable-list">list of specifications below</a>). These changes must be backward compatible, i.e.,</p>
 
       <ul>
         <li>all RDF 1.1 Graphs, containing triples with language tags literals, remain valid and with the same semantics;</li>
@@ -164,7 +164,7 @@
       <aside class="comment">These bullet points probably need a more precise formulation.</aside>
      
 
-      <p><em>Editorial</em> errata for <a href="https://www.w3.org/2001/sw/wiki/RDF1.1_Errata">RDF 1.1</a>, <a href="https://www.w3.org/2013/sparql-errata">SPARQL 1.1</a>, <a href="https://github.com/w3c/data-shapes/issues">SHACL</a, <a href="https://www.w3.org/2013/csvw/errata/">CSVW</a>, and <a href="https://www.w3.org/2001/sw/wiki/RDFa_1.1._Errata">RDFa 1.1</a> will also be handled by the Working Group.</p>
+      <p><em>Editorial</em> errata for <a href="https://www.w3.org/2001/sw/wiki/RDF1.1_Errata">RDF 1.1</a>, <a href="https://www.w3.org/2001/sw/wiki/RDFa_1.1._Errata">RDFa 1.1</a>, <a href="https://www.w3.org/2013/sparql-errata">SPARQL 1.1</a>, <a href="https://github.com/w3c/data-shapes/issues">SHACL</a, and <a href="https://www.w3.org/2013/csvw/errata/">CSVW</a>  will also be handled by the Working Group.</p>
 
       <aside class="comment">What about <a href="http://www.w3.org/TR/r2rml/">r2rml</a>? This depend on whether direction can be expressed in SQL. If so, then it should be added to the list.</aside>
 
@@ -199,7 +199,7 @@
 
         <p>More detailed milestones and updated publication schedules are available on the <a href="https://www.w3.org/[groupname]/PubStatus">group publication status page</a>.</p>
 
-        <p>The list below uses “RDF 1.2”, “SPARQL 1.2”, and “RDFa 1.2”, etc, to designate the new releases; this should be considered as indicative only. It will be the decision of the Working Group to decide on the final version numbers.</p>
+        <p>The list below uses “RDF 1.2”, “SPARQL 1.2”, and “RDFa 1.2”, etc, to designate the new releases; this should be considered as indicative only. It will be the decision of the Working Group to choose the final version numbers.</p>
 
         <section id="normative">
           <h3>
@@ -209,7 +209,7 @@
             The Working Group will deliver the following <em>updated</em> specifications containing the new version of the <a href="https://www.w3.org/rdf11-concepts#section-Graph-Literal"><code>langString</code> datatype</a>:
           </p>
           <dl id="deliverable-list">
-            <dt id="rdf11" class="spec">RDF 1.2</dt>
+            <dt id="rdf" class="spec">RDF 1.2</dt>
             <dd>
                This term refers to a family of documents, published in 2014. The current list comprises:
                <ul>
@@ -223,8 +223,19 @@
                  <li><a href="http://www.w3.org/TR/2014/REC-rdf-syntax-grammar-20140225/">RDF 1.2 XML Syntax</a></li>
                </ul>
             </dd>
+            
+            <dt id="rdfa" class="spec">RDFa 1.2</dt>
+            <dd>
+               This term refers to a family of documents, published in 2015. The current list comprises:
+               <ul>
+                 <li><a href="http://www.w3.org/TR/2015/REC-rdfa-core-20150317/">RDFa Core 1.1 - Third Edition</a></li>
+                 <li><a href="http://www.w3.org/TR/2015/REC-html-rdfa-20150317/">HTML+RDFa 1.1 - Second Edition</a></li>
+                 <li><a href="http://www.w3.org/TR/2015/REC-xhtml-rdfa-20150317/">XHTML+RDFa 1.1 - Third Edition</a></li>
+                 <li><a href="http://www.w3.org/TR/2015/REC-rdfa-lite-20150317/">RDFa Lite 1.1 - Second Edition</a></li>
+               </ul>
+            </dd>
 
-            <dt id="rdf11" class="spec">SPARQL 1.2</dt>
+            <dt id="sparql" class="spec">SPARQL 1.2</dt>
             <dd>
                This term refers to a family of documents, published in 2013. The current list comprises:
                <ul>
@@ -260,39 +271,6 @@
               <li><a href="http://www.w3.org/TR/2015/REC-csv2rdf-20151217/">Generating RDF from Tabular Data on the Web, </a></li>
               </ul>
             </dd>
-
-
-            
-            <dt id="sparql" class="spec">SPARQL 1.2</dt>
-            <dd>
-               This term refers to a family of documents, published in 2013. The current list comprises:
-               <ul>
-                <li><a href="http://www.w3.org/TR/2013/REC-sparql11-overview-20130321/">SPARQL 1.1 Overview</a></li>
-                <li><a href="http://www.w3.org/TR/2013/REC-sparql11-query-20130321/">SPARQL 1.1 Query Language</a></li>
-                <li><a href="http://www.w3.org/TR/2013/REC-sparql11-update-20130321/">SPARQL 1.1 Update</a></li>
-                <li><a href="http://www.w3.org/TR/2013/REC-sparql11-service-description-20130321/">SPARQL 1.1 Service Description</a></li>
-                <li><a href="http://www.w3.org/TR/2013/REC-sparql11-federated-query-20130321/">SPARQL 1.1 Federated Query</a></li>
-                <li><a href="https://www.w3.org/TR/2013/REC-sparql11-results-json-20130321/">SPARQL 1.1 Query Results JSON Format</a></li>
-                <li><a href="https://www.w3.org/TR/2013/REC-sparql11-results-csv-tsv-20130321/">SPARQL 1.1 Query Results CSV and TSV Formats</a></li>
-                <li><a href="http://www.w3.org/TR/2013/REC-rdf-sparql-XMLres-20130321/">SPARQL Query Results XML Format (Second Edition)</a></li>
-                <li><a href="http://www.w3.org/TR/2013/REC-sparql11-entailment-20130321/">SPARQL 1.1 Entailment Regimes</a></li>
-                <li><a href="http://www.w3.org/TR/2013/REC-sparql11-entailment-20130321/">SPARQL 1.1 Entailment Regimes</a></li>
-                <li><a href="http://www.w3.org/TR/2013/REC-sparql11-protocol-20130321/">SPARQL 1.1 Protocol</a></li>
-                <li><a href="http://www.w3.org/TR/2013/REC-sparql11-http-rdf-update-20130321/">SPARQL 1.1 Graph Store HTTP Protocol</a></li>
-              </ul>
-            </dd>
-
-            <dt id="rdf11" class="spec">RDFa 1.2</dt>
-            <dd>
-               This term refers to a family of documents, published in 2015. The current list comprises:
-               <ul>
-                 <li><a href="http://www.w3.org/TR/2015/REC-rdfa-core-20150317/">RDFa Core 1.1 - Third Edition</a></li>
-                 <li><a href="http://www.w3.org/TR/2015/REC-html-rdfa-20150317/">HTML+RDFa 1.1 - Second Edition</a></li>
-                 <li><a href="http://www.w3.org/TR/2015/REC-xhtml-rdfa-20150317/">XHTML+RDFa 1.1 - Third Edition</a></li>
-                 <li><a href="http://www.w3.org/TR/2015/REC-rdfa-lite-20150317/">RDFa Lite 1.1 - Second Edition</a></li>
-               </ul>
-            </dd>
-
           </dl>
 
           <p>
