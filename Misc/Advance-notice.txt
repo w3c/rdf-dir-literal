@@ -1,0 +1,41 @@
+Work in Progress on an RDF Literal Direction Working Group Charter (Advance Notice)
+-----------------------------------------------------------------------------------
+
+Dear Advisory Committee Representative,
+Chairs,
+
+This is an advance notice that a draft charter for a possible RDF Literal Direction Working Group is being developed, following discussions in several Working Groups (e.g., JSON-LD, Verifiable Claims, Annotations, Publishing, Web of Things) related to the respective I18N horizontal reviews of these groups.
+
+The mission of the RDF Literal Direction Working Group is to add base direction metadata (i.e., right-to-left or left-to-right) to RDF language tagged literals. This is done by updating a number of existing W3C Specifications; while doing so, reported editorial errata will also be taken care of. The technical goal of the Working Group is narrowly focussed: any other technical change, improvements, additions, etc., are out of scope.
+
+There is a background document created by a group of representatives of some of the aforementioned Working Groups:
+
+  https://w3c.github.io/rdf-dir-literal/
+
+that gives an overview of the problem area and the various solutions that have been discussed over the years, with further references to other documents and discussions. The consensus among participants is that the only proper answer to solve this fundamental i18n problem in RDF is to amend the current specification. This charter work is the result of that consensus:
+
+  https://w3c.github.io/rdf-dir-literal/draft-charter.html
+
+A special difficulty we would like to draw your attention to is that, if such a core specification like RDF is modified, the modification may have a knock-on effect on a number of other recommendations that should then all go through a similar revisions. I.e., the load on the Working Group may become much higher than one would initially envisage. The group gave some thought on how this issue can be mitigated through some extra technical features, which may significantly reduce the number of documents that would require immediate revision. However, this choice is not obvious. To get a maximum number of feedback from the community, the charter draft contains two "versions" folded in as two possible lists of deliverables under section 2.1. (Normative Specifications), namely:
+
+1. ("Deliverables for the “Integral update” alternative") is the variant whereby all necessary specifications are updated to include the updated version of language tagged literals
+2. ("Deliverables for the “Hybrid” alternative) that also defines a specific datatype alongside the update of language tagged literals, but which allows staging the revision of a number of recommendations to a later time without affecting deployment
+
+We would welcome the community's comments and reaction to the charter. Before starting the formal review we would welcome input and feedback on the charter by raising and/or commenting on issues in:
+
+  https://github.com/w3c/rdf-dir-literal/issues 
+
+Members may also discuss on w3c-ac-forum@w3.org.
+
+If you have any questions or need further information, please contact Ivan Herman <ivan@w3.org>, Richard Ishidia <ishida@w3.org, or Wendy Seltzer <wseltzer@w3.org>.
+
+This announcement follows section 5.2.2 of the W3C Process Document:
+  https://www.w3.org/2018/Process-20180201/#WGCharterDevelopment
+
+
+For Tim Berners-Lee, W3C Director,
+Ivan Herman, Publishing Technical Lead,
+Richard Ishida, Internationalization Champion,
+Wendy Seltzer, W3C Strategy Lead;
+Coralie Mercier, Head of W3C Marketing & Communications
+
