@@ -228,7 +228,7 @@
                 <section id="datatype-family">
                     <h2>Define a <em>family</em> of language datatypes</h2>
 
-                    <p>A (very large, albeit finite) family of datatypes can be defined using the following URL patterns: <code>https://www.w3.org/i18n#XX{_YY}</code>, where:</p>
+                    <p>A (very large, albeit finite) family of datatypes can be defined using the following URL pattern: <code>https://www.w3.org/i18n#XX{_YY}</code>, where:</p>
 
                     <ul>
                         <li>
@@ -254,6 +254,7 @@
                             The mapping means parsing the URL and mapping it to the corresponding tuple. 
                         </dd>
                     </dl>
+
                 </section>
             </section>
             <section>
@@ -447,7 +448,7 @@
                 }
             </pre>
 
-            <p>does, in fact, include the necessary information to deduce the rigth-to-left nature of the text by virtue of declaring the text to be in Hebrew, whereas in</p>
+            <p>does, in fact, include the necessary information to deduce the right-to-left nature of the text by virtue of declaring the text to be in Hebrew, whereas in</p>
 
             <pre class=nohighlight>
                 [] ex:example "<bdo dir="ltr">آذربايجانجا ديلي</bdo>"@az-Arab ; "Азәрбајҹан дили"@az-Cyrl .
@@ -543,15 +544,17 @@
 
             <ul>
                 <li>The core RDF 1.1 specification is updated, as described in <a href="#langString">the section above</a>.</li>
-                <li>New datatype(s) (as described <a href="datatype">above</a>) are defined, but with the following modifications:
+                <li>New datatype(s) (as described <a href="#datatype">above</a>) are defined, but with the following modifications:
                     <ul>
                         <li>
-                            these datatypes are defined to be deprecated soon, i.e., they are considered to be of a temporary usage only;
+                            These datatypes are defined to be deprecated eventually, i.e., they are considered to be of a temporary usage only;
                         </li>
                         <li>
-                            the value space for the datatype(s) consists of the renewed language string tuples as defined in the (renewed) RDF semantics document&nbsp;[[rdf11-mt]];
+                            The value space for the datatype(s) consists of the renewed language string tuples as defined in the (renewed) RDF semantics document&nbsp;[[rdf11-mt]];
                         </li>
-                        <li>the upcoming versions of N-Triple, N-Quads, Turtle, and TriG serializations are <em>not</em> modified; i.e., the only way to express the renewed <code>langString</code> is to use the new datatype(s).</li>
+                        <li>
+                            Current serializations (N-Triple, N-Quads, Turtle, TriG, etc.) would remain valid using the <code>"value"^^i18n:XX_YY</code> syntax. Upcoming versions MAY introduce new syntaxes (akin to what has been <a href="#base-serializations">described above</a>) to be mapped to the renewed language string tuples. However a base direction COULD still be expressed using the <code>"value"^^i18n:XX_YY</code> syntax, and that syntax would be specially parsed as the corresponding renewed language string, too. 
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -561,7 +564,7 @@
             </p>
 
             <p>
-                In view of their different usage pattersn, new versions of RDFa and JSON-LD may be updated, though, with the appropriate adaptations on the RDF Graphs they generate (e.g., if they generate N-Triples then the new datatypes should be used; if they are built on top of an RDF 1.2 compliant environment they would generate the proper value space entries).
+                In view of their different usage patterns, new versions of RDFa and JSON-LD may be updated, though, with the appropriate adaptations on the RDF Graphs they generate (e.g., if they generate N-Triples then the new datatypes should be used; if they are built on top of an RDF 1.2 compliant environment they would generate the proper value space entries).
             </p>
         </section>
         <section>
@@ -570,9 +573,8 @@
             <p>
                 The major advantage of this approach is that it combines the ideal solution of taking care of an RDF “bug” while ensuring a somewhat smoother deployment.
             </p>
-
             <p>
-                The disadvantage is that there has to be a very careful consideration when the datatypes are deprecated, rescinded, etc., i.e., it will need a careful monitoring of the RDF ecosystem evolution.
+                A disadvantage is that it creates a special case in several concrete syntaxes (e.g. Turtle), where the `i18:XX_YY` family of IRIs are used as "magic" terms, and end up being interpreted as a different IRI (namely `rdf:langString`). Another disadvantage is that there has to be a very careful consideration when the datatypes are deprecated, rescinded, etc., i.e., it will need a careful monitoring of the RDF ecosystem evolution.
             </p>
         </section>
     </section>
