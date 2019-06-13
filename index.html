@@ -90,11 +90,11 @@
         </p>
 
         <p>
-            This document collects some some of the possible solutions that came to the fore in various discussions. All these approaches have their pros and cons; the choice will have to be made by the community; the goal is to have a unified approach for all W3C specifications instead of each of those having to come up with some heuristics separately.
+            This document collects some of the possible solutions that came to the fore in various discussions. All these approaches have their pros and cons; the choice will have to be made by the community; the goal is to have a unified approach for all W3C specifications instead of each of those having to come up with some heuristics separately.
         </p>
 
         <p class=note>
-            The problem of setting the base direction for a string is, actually, the tip of the iceberg of internationalization issues around RDF literals. This document focuses on so far <em>only</em> only on establishing the overall directional context for a given string. The larger problems is the handling of directional and languages changes <em>within</em> a string. To solve that larger issue would require the use Unicode formatting characters in plain text strings or use HTML format strings, i.e., the <a data-cite="!rdf11-concepts#section-html"><code>HTML</code> datatype</a> of RDF 1.1&nbsp;[[rdf11-concepts]]. While both of these <em>can</em> be done in today’s RDF, there are several problems with both those approaches (see also [[string-meta]] for some of the issues) which warrants to find a somewhat simpler solution for the base direction case.
+            The problem of setting the base direction for a string is, actually, the tip of the iceberg of internationalization issues around RDF literals. This document focuses so far <em>only</em> on establishing the overall directional context for a given string. The larger problems is the handling of directional and languages changes <em>within</em> a string. To solve that larger issue would require the use of Unicode formatting characters in plain text strings, or the use of HTML format strings, i.e., the <a data-cite="!rdf11-concepts#section-html"><code>HTML</code> datatype</a> of RDF 1.1&nbsp;[[rdf11-concepts]]. While both of these <em>can</em> be done in today’s RDF, there are several problems with both those approaches (see also [[string-meta]] for some of the issues) which warrants to find a somewhat simpler solution for the base direction case.
         </p>
 
     </section>
@@ -115,7 +115,7 @@
             <section id='langString'>
                 <h2>The core definition</h2>
                 <p>
-                    The current definition for <code>langString</code> is in <a data-cite="!rdf11-concepts#section-Graph-Literal">section 3.3</a> of the RDF 1.1 document&nbsp;[[rdf11-concepts]]. It is based upon assigning a language tag, using&nbsp;[[bcp47]], to a string. It is somewhat of an odd case in the RDF&nbsp;1.1 model insofar as it has, in contrast to all other data types in RDF, an additional structure: the lexical space is a string <em>and</em> the additional (language) tag, and the value space of the datatype is also defined as a <em>tuple</em> consisting of the literal string and the language tag. This peculiarity means that <code>langString</code> literals have to be treated separately by all RDF implementations.
+                    The current definition for <code>langString</code> is in <a data-cite="!rdf11-concepts#section-Graph-Literal">section 3.3</a> of the RDF 1.1 document&nbsp;[[rdf11-concepts]]. It is based upon assigning a language tag, using&nbsp;[[bcp47]], to a string. It is somewhat of an odd case in the RDF&nbsp;1.1 model insofar as it has, in contrast to all other data types in RDF, an additional structure: the lexical form comprises a string <em>and</em> the additional (language) tag, and the value space of the datatype is also defined as a set of <em>tuples</em> consisting of the literal string and the language tag. This peculiarity means that <code>langString</code> literals have to be treated separately by all RDF implementations.
                 </p>
 
                 <p>
@@ -130,7 +130,7 @@
                 <h2>Serializations</h2>
 
                 <p>
-                    The serializations of a renewed <code>langString</code> SHOULD be defined in such way that the presence of a base direction tag is OPTIONAL. This is important to ensure that current RDF datasets would remain valid. This means the parsing of language literals should replace the missing base direction tag with <code>auto</code>.
+                    The serializations of a renewed <code>langString</code> SHOULD be defined in such way that the presence of a base direction tag is OPTIONAL. This is important to ensure that current RDF datasets would remain valid. This means that the parsing of language literals should replace the missing base direction tag with <code>auto</code>.
                 </p>
 
                 <section>
@@ -144,7 +144,7 @@
 							&lt;/rdf:Description>
 						</pre>
 
-                    <p>The presence of <code>rdf:dir</code> is optional and defaults to <code>auto</code>.</p>
+                    <p>The presence of <code>rdf:dir</code> is optional and it defaults to <code>auto</code>.</p>
                 </section>
 
                 <section>
@@ -156,13 +156,13 @@
 						</pre>
 
 
-                    <p>The presence of the <code>^…</code> tag is optional and defaults to <code>auto</code>.</p>
+                    <p>The presence of the <code>^…</code> tag is optional and it defaults to <code>auto</code>.</p>
                 </section>
 
                 <section>
                     <h2>JSON-LD</h2>
 
-                    <p>JSON-LD uses special JSON objects to express language literals that can be extended via the introduction of a new JSON-LD keywords <code>@direction</code>:</p>
+                    <p>JSON-LD uses special JSON objects (<em>value objects</em>) to express RDF literals, that can be extended via the introduction of a new JSON-LD keywords <code>@direction</code>:</p>
 
                     <pre class=nohighlight>
 							"ex:example" : {
@@ -172,7 +172,7 @@
 							}
 						</pre>
 
-                    <p>The presence of <code>@direction</code> is optional and defaults to <code>auto</code>.</p>
+                    <p>The presence of <code>@direction</code> is optional and it defaults to <code>auto</code>.</p>
                 </section>
             </section>
             <section>
@@ -183,7 +183,7 @@
                 </p>
 
                 <p id="full-family">
-                    A major problem with the approach is that, because it touches the “core” or RDF, such a change would affect a large number of recommendations that all rely on that core: SPARQL, SHACL, RDFa, R2RML, etc. That means that if the core RDF specification is updated, _all other documents_ may have to be updated at the same time, which becomes a significant endeavor. Similarly, deployment is also a major problem: Because language tagged literals are treated separately in RDF, all implementations (Jena, RDFLib, Sesame, various triple stores, Turtle and RDF/XML parsers and serializers, etc.) MUST be updated. That may take a long time, and it may not be easy to convince the community to do so.
+                    A major problem with the approach is that, because it touches the “core” or RDF, such a change would affect a large number of recommendations that all rely on that core: SPARQL, SHACL, RDFa, R2RML, etc. That means that if the core RDF specification is updated, <em>all other documents</em> may have to be updated at the same time, which becomes a significant endeavor. Similarly, deployment is also a major problem: Because language tagged literals are treated separately in RDF, all implementations (Jena, RDFLib, Sesame, various triple stores, Turtle and RDF/XML parsers and serializers, etc.) MUST be updated. That may take a long time, and it may not be easy to convince the community to do so.
                 </p>
             </section>
         </section>
@@ -197,7 +197,7 @@
             <section>
                 <h2>Core definition</h2>
                 <p>
-                    Defining a new datatype means is (per the <a data-cite="!rdf11-concepts#section-Datatypes">RDF specification</a>):
+                    Defining a new datatype means (per the <a data-cite="!rdf11-concepts#section-Datatypes">RDF specification</a>):
                 </p>
 
                 <ul>
@@ -242,7 +242,7 @@
                             <strong>XX</strong>: is a [[bcp47]] language tag
                         </li>
                         <li>
-                            <strong>YY</strong>: is <code>ltr</code> or <code>rtl</code>, with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]. This part may be missing.</dd>                    
+                            <strong>YY</strong>: is <code>ltr</code> or <code>rtl</code>, with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]. This part may be missing.                 
                         </li>
                      </ul>
 
@@ -314,7 +314,7 @@
                 </pre>
 
                 <p>
-                    could be considered as valid, generating a <code>LocalizableString</code>, or <code>i18n:*</code>, respectively, when mapped upon RDF. An advantage of introducing such a shorthand in JSON is that vanilla JSON may adopt the same pattern which can be used in general (see also the definition of <a data-cite="string-meta#Localizable-String-Dictionary"><code>Localizable</code></a>.)
+                    could be considered as valid, generating a <code>LocalizableString</code>, or <code>i18n:*</code>, respectively, when mapped upon RDF. An advantage of introducing such a shorthand in JSON is that vanilla JSON may adopt the same pattern which can be used in general (see also the definition of <a data-cite="string-meta#Localizable-String-Dictionary"><code>Localizable</code></a> in&nbsp;[[string-meta]].)
                 </p>
 
                 <p>
@@ -400,7 +400,7 @@
             <section>
                 <h2>Core definition</h2>
                 <p>
-                    Define the <code>-x-d-ltr</code> and <code>-x-d-rtl</code> private-use language subtags. I.e., ahe language tag could look like <code>lang-x-d-dir</code>, where <code>lang</code> is a valid [[bcp47]] language tag, and <code>dir</code>  MUST have the value of <code>ltr</code>, <code>rtl</code> with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]. Per definition this usage of this private-use tag is <em>restricted</em> to a specific family of specifications (at this moment one could restrict it to RDF, OWL, SPARQL, SKOS, etc., their various serializations, plus possibly JSON and CBOR).
+                    Define the <code>-x-d-ltr</code> and <code>-x-d-rtl</code> private-use language subtags. I.e., the language tag could look like <code>lang-x-d-dir</code>, where <code>lang</code> is a valid [[bcp47]] language tag, and <code>dir</code>  MUST have the value of <code>ltr</code>, <code>rtl</code> with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]. Per definition this usage of this private-use tag is <em>restricted</em> to a specific family of specifications (at this moment one could restrict it to RDF, OWL, SPARQL, SKOS, etc., their various serializations, plus possibly JSON and CBOR).
                 </p>
             </section>
 
@@ -431,7 +431,7 @@
                 <h2>Pros and Cons</h2>
 
                 <p>
-                    A major advantage of this approach are similar to <a href=#extending-bcp></a>: it is fully transparent to current RDF deployments, and it affects only application layers that do display the literal values for humans and it also works for parsers “out of the box. Because it is explicitly restricted to some specifications, it can (and should) be ignored by HTML, CSS, or other usage areas of [[bcp47]].
+                    A major advantage of this approach are similar to <a href=#extending-bcp></a>: it is fully transparent to current RDF deployments, and it affects only application layers that do display the literal values for humans and it also works for parsers “out of the box”. Because it is explicitly restricted to some specifications, it can (and should) be ignored by HTML, CSS, or other usage areas of [[bcp47]].
                 </p>
 
                 <p>
