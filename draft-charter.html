@@ -97,6 +97,12 @@
            The text contains specific community feedback requests to find a consensus on the final charter proposal to be voted on by the AC.
          </aside>
 
+         <aside class=comment>
+           The current text is, in fact, two possible charters folded in one; one based on an integral update of all specifications based on RDF but which would lead to significant editorial and deployment issues, while the other is based on a “hybrid” approach that would allow a staged deployment. These are described in more details in the sections on <a href="https://w3c.github.io/rdf-dir-literal/#extending-lang-string">extending <code>langString</code></a> and <a href="https://w3c.github.io/rdf-dir-literal/#hybrid">describing a hybrid approach</a>, respectively, in the accompanying document. The <a href="#deliverables">deliverables</a> and <a href="#timeline">sections</a> show the differences between the two approaches.
+           <br>
+           We are requesting a community feedback on which approach to follow in the final charter
+         </aside>
+
       <section id="details">
         <table class="summary-table">
           <tr id="Duration">
@@ -112,7 +118,7 @@
               End date
             </th>
             <td>
-              01 April 2021
+              <i class=todo>31 December 2020 or 1 September 2010</i>
             </td>
           </tr>
 
@@ -213,10 +219,6 @@
           <p>
             The Working Group will deliver the following <em>updated</em> specifications referring to the new version of the <a href="https://www.w3.org/rdf11-concepts#section-Graph-Literal"><code>langString</code> datatype</a> (when applicable) and with possible editorial errata changed:
           </p>
-
-          <aside class=comment>
-              For this preliminary draft we are currently considering two different approaches for the deliverables: one that is based on an integral update of all specifications based on RDF but which would lead to significant deployment issues, while the other is based on a “hybrid” approach that would allow a staged deployment. These are described in more details in the sections on <a href="https://w3c.github.io/rdf-dir-literal/#extending-lang-string">extending <code>langString</code></a> and <a href="https://w3c.github.io/rdf-dir-literal/#hybrid">describing a hybrid approach</a> in the accompanying document. We are requesting a community feedback on which approach to follow in the final charter.
-          </aside>
     
           <details style="margin-top:2em">
               <summary><span style="font-size: 120%; color: darkblue">Deliverables for the “Integral update” alternative</span></summary>
@@ -289,7 +291,7 @@
                     <p>See also <a href="https://www.w3.org/2013/csvw/errata/">errata</a>.</p>
                   </dd>
       
-                  <dt id="csvw" class="spec">RDB2RDF 1.1</dt>
+                  <dt id="rdb2rdf" class="spec">RDB2RDF 1.1</dt>
                   <dd>
                   This term refers to a family of documents, published in 2015. The current list comprises:
                     <ul>
@@ -304,7 +306,7 @@
 
           <details style="margin-top:2em">
               <summary><span style="font-size: 120%; color: darkblue">Deliverables for the “Hybrid” alternative</span></summary>
-              <dl id="deliverable-list">
+              <dl id="deliverable-list_bis">
                 <dt id="datatype" class="spec">RDF Datatype for Language Literals</dt>
                 <dd>
                   <p>This specification defines one or more RDF datatypes to represent language literals with an optional base direction.</p>
@@ -361,15 +363,32 @@
         <section id="timeline">
           <h3>Timeline</h3>
 
+          <details style="margin-top:2em">
+            <summary><span style="font-size: 120%; color: darkblue">Timeline for the “Integral update” alternative</span></summary>
             <ul>
               <li>October 2019: First teleconference</li>
-              <li>December 2019: FPWD for all the specifications listed <a href="#deliverable-list">above</a></li>
-              <li>March 2020: CR for all the specifications listed <a href="#deliverable-list">above</a></li>
-              <li>January 2021: PR for all the specifications listed <a href="#deliverable-list">above</a></li>
-              <li>March 2021: Recommendations for all the specifications listed <a href="#deliverable-list">above</a></li>
+              <li>November 2019: FPWD for all the specifications listed for <a href="#rdf">RDF 1.2</a> and <a href="#rdfa">RDFa 1.2</a></li>
+              <li>January 2020: CR for <a href="#rdf">RDF 1.2</a> and <a href="#rdfa">RDFa 1.2</a></li>
+              <li>March 2020: FPWD for the specifications listed <a href="#deliverable-list">above</a>, except for <a href="#rdf">RDF 1.2</a> and <a href="#rdfa">RDFa 1.2</a></li>
+              <li>May 2020: CR for the specifications listed <a href="#deliverable-list">above</a>, except for <a href="#rdf">RDF 1.2</a> and <a href="#rdfa">RDFa 1.2</a></li>
+              <li>June 2020: PR for <a href="#rdf">RDF 1.2</a> and <a href="#rdfa">RDFa 1.2</a></li>
+              <li>August 2020: Rec for <a href="#rdf">RDF 1.2</a> and <a href="#rdfa">RDFa 1.2</a></li>
+              <li>October 2020: PR for the specifications listed <a href="#deliverable-list">above</a>, except for <a href="#rdf">RDF 1.2</a> and <a href="#rdfa">RDFa 1.2</a></li>
+              <li>December 2020: Rec for the specifications listed <a href="#deliverable-list">above</a>, except for <a href="#rdf">RDF 1.2</a> and <a href="#rdfa">RDFa 1.2</a></li>
             </ul>
+          </details>
 
-            <aside class="comment">See a possible <a href="https://github.com/w3c/rdf-dir-literal/issues/11">alternative timeline</a>, in view of the large list of documents, staging the deliverables. That alternative may not be relevant if the “hybrid” approach is adopted.</aside>
+          <details style="margin-top:2em">
+            <summary><span style="font-size: 120%; color: darkblue">Timeline for the “Hybrid” alternative</span></summary>
+            <ul>
+              <li>October 2019: First teleconference</li>
+              <li>November 2019: FPWD for all the specifications listed <a href="#deliverable-list_bis">above</a></li>
+              <li>January 2020: CR for all the specifications listed <a href="#deliverable-list_bis">above</a></li>
+              <li>June 2020: PR for <a href="#rdf">RDF 1.2</a> and <a href="#rdfa">RDFa 1.2</a></li>
+              <li>August 2020: Rec for <a href="#rdf">RDF 1.2</a> and <a href="#rdfa">RDFa 1.2</a></li>
+            </ul>
+          </details>
+
         </section>
       </section>
 
