@@ -86,7 +86,7 @@
         </p>
 
         <p>
-            This problem has affected a number of specifications that define RDF vocabularies (usually expressed in JSON-LD). These include, e.g., Activity Streams&nbsp;[[activitystreams-core]], Web Publications&nbsp;[[wpub]], Verifiable Credentials&nbsp;[[verifiable-claims-data-model]], or [[wot-thing-description]]. There have been parallel discussions in the various Working Groups (see, e.g., <a href="https://github.com/w3c/vc-data-model/issues/436">VC issue #436</a>, <a href="https://github.com/w3c/wpub/issues/354">WPUB issue #354</a>, or <a href="https://github.com/w3c/wot-thing-description/issues/643">WoT issue #643</a>). This problem was also discussed during the editorial work of [[string-meta]] (see, e.g., <a href="https://github.com/w3c/string-meta/issues/12">issue #12</a>). All these discussions led to the same conclusion: because RDF cannot express this information, neither can JSON-LD or Turtle. In other words, this is a problem that must be solved on the RDF level.
+            This problem has affected a number of specifications that define RDF vocabularies (usually expressed in JSON-LD). These include, e.g., Activity Streams&nbsp;[[activitystreams-core]], Web Publications&nbsp;[[wpub]], Verifiable Credentials&nbsp;[[verifiable-claims-data-model]], or Web of Thing&nbsp;[[wot-thing-description]]. There have been parallel discussions in the various Working Groups (see, e.g., <a href="https://github.com/w3c/vc-data-model/issues/436">VC issue #436</a>, <a href="https://github.com/w3c/wpub/issues/354">WPUB issue #354</a>, or <a href="https://github.com/w3c/wot-thing-description/issues/643">WoT issue #643</a>). This problem was also discussed during the editorial work of [[string-meta]] (see, e.g., <a href="https://github.com/w3c/string-meta/issues/12">issue #12</a>). All these discussions led to the same conclusion: because RDF cannot express this information, neither can JSON-LD or Turtle. In other words, this is a problem that must be solved on the RDF level.
         </p>
 
         <p>
@@ -149,7 +149,7 @@
     
                         <pre class="nohighlight">
                             &lt;rdf:Description >
-                                &lt;ex:example xml:lang="en" rdf:dir="rtl"><bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>&lt;/ex:example>
+                                &lt;ex:example xml:lang="he" rdf:dir="rtl"><bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>&lt;/ex:example>
                                 &lt;ex:isbn rdf:dir="ltr">978-2-290-16543-0&lt;/ex:isbn>
                             &lt;/rdf:Description>
                         </pre>    
@@ -219,7 +219,7 @@
                     <p>There may be different possibilities to define a new datatype (or datatypes). This are defined in the following two sections</p>
     
                     <section id="localizableStrings">
-                        <h2>Define a singl <code>LocalizableString</code> datatype</h2>
+                        <h2>Define a single <code>LocalizableString</code> datatype</h2>
 
                         <p>These requirements can defined, for this this case, as follows:</p>
     
@@ -331,7 +331,7 @@
                     </pre>
     
                     <p>
-                        could be considered as valid, generating a <code>LocalizableString</code>, or <code>i18n:*</code>, respectively, when mapped upon RDF. An advantage of introducing such a shorthand in JSON is that vanilla JSON may adopt the same pattern which can be used in general regardless (see also the definition of <a data-cite="string-meta#Localizable-String-Dictionary"><code>Localizable</code></a> in&nbsp;[[string-meta]].)
+                        could be considered as valid JSON-LD, generating a <code>LocalizableString</code>, or <code>i18n:*</code>, respectively, when mapped upon RDF. An advantage of introducing such a shorthand in JSON-LD is that vanilla JSON may adopt the same pattern which can be used in general regardless (see also the definition of <a data-cite="string-meta#Localizable-String-Dictionary"><code>Localizable</code></a> in&nbsp;[[string-meta]].)
                     </p>
     
                     <p>
@@ -342,13 +342,13 @@
                     <h2>Pros and Cons</h2>
     
                     <p>
-                        The major advantage of these approaches is that it is mostly transparent to current RDF deployments, and the affect only application layers that do display the literal values for humans. It also works for parsers “out of the box”, unless new serialization versions are defined.
+                        The major advantage of these approaches is that it is mostly transparent to current RDF deployments, and thus affects only application layers that do display the literal values for humans. It also works for parsers “out of the box”, unless new serialization versions are defined.
                     </p>
     
                     <p>
                         The major disadvantage is that it is never a good idea to introduce yet another micro-syntax into a specification; it is the source of confusion and possible errors. (This can be mitigated by introducing new syntactic sugars.) Also, applications that want to make use of base direction values would have to handle some sort of a duality, insofar as the data may include <em>both</em> <code>langString</code> <em>and</em> <code>LocalizableString</code> (or, respectively, <code>i18n:*</code>) language strings.
                     </p>
-    
+
                     <p>(See also <a data-cite="string-meta#issues-5">some further issues</a>.)</p>
                 </section>
             </section>
@@ -400,7 +400,7 @@
             <section>
                 <h2>General comments: Pros and Cons</h2>
                 <p>
-                    The major advantage of these solutions is that it keeps the changes “confined” to the realm of RDF, with no danger of interference with other technologies (in contrast to the <a href="#bcp47_based"></a> approach below.
+                    The major advantage of these solutions is that it keeps the changes “confined” to the realm of RDF, with no danger of interference with other technologies (in contrast to the <a href="#bcp47_based"></a> approach below).
                 </p>
 
                 <p>
@@ -458,7 +458,7 @@
             <section id=private-tag>
                 <h2>Private-use subtag <code>-x-d-*</code></h2>
     
-                <p>The core [[bcp47]] standard allows the usage of “private-use” subtag. These are chosen and maintained by private agreement amongst parties.</p>
+                <p>The core [[bcp47]] standard allows the usage of “private-use” subtags. These are chosen and maintained by private agreement amongst parties.</p>
     
                 <section>
                     <h2>Core definition</h2>
@@ -533,7 +533,7 @@
                 <h3>General comments: Pros and Cons</h3>
 
                 <p>
-                    The major advantage of all these approaches is that they iare fully transparent to current RDF deployments, and it affects only application layers that do display the literal values for humans. It also works for parsers “out of the box” unless they check the validity of the language tag (which they usually don’t).
+                    The major advantage of all these approaches is that they are fully transparent to current RDF deployments, and affect only application layers that do display the literal values for humans. They also work for parsers “out of the box” unless they check the validity of the language tag (which they usually don’t).
                 </p>
 
                 <p>
@@ -545,7 +545,7 @@
                 </p>
 
                 <p>
-                    Note that none of the examples in this section contained an example for an ISBN term, which needs a base direction but <em>no</em> language tag. One might consider to use, e.g., <code>und-x-d-ltr</code> (where <code>und</code> is the BCP47 tag for an “undefined” language, but that may be at odd with the surrounding context and, therefore, is semantically not clean. In other words, it is not clear how the direction of an ISBN string could be defined in any of those schemes.
+                    Note that none of the examples in this section contained an example for an ISBN term, which needs a base direction but <em>no</em> language tag. One might consider to use, e.g., <code>und-x-d-ltr</code> (where <code>und</code> is the BCP47 tag for an “undefined” language), but that may be at odd with the surrounding context and, therefore, is semantically not clean. In other words, it is not clear how the direction of an ISBN string could be defined in any of those schemes.
                 </p>
 
                 <p>
