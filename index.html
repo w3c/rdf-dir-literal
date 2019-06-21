@@ -278,7 +278,7 @@
                 <section>
                     <h2>Serializations</h2>
     
-                    <p>Because this is a new datatype, strictly speaking there is no need for a new serialization; all concrete syntaxes have a way to express literals with a datatype. E.g., the literal would have the form of
+                    <p>Because this is a new datatype, strictly speaking there is no need for a new serialization; all concrete syntaxes have a way to express literals with a datatype. E.g., in Turtle, the literal would have the form of
     
                     <pre class=nohighlight>
                         [] ex:example "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>@he^rtl"^^rdf:LocalizableString ;
@@ -292,7 +292,7 @@
                            ex:isbn "978-2-290-16543-0"^^i18n:_ltr
                     </pre>
     
-                    <p>in Turtle, and</p>
+                    <p>and in JSON-LD</p>
     
                     <pre class=nohighlight>
                         "ex:example" : {
@@ -317,10 +317,6 @@
                             "@datatype" : "18n:_ltr"
                         }
                     </pre>
-    
-                    <p>
-                        in JSON-LD 1.0. 
-                    </p>
     
                     <p>
                         However, newer versions of the the serialization syntaxes MAY introduce the syntactic facilities to express this new datatype by adopting the <a href="#base-serializations">serialization formats</a> as defined for the <code>langString</code> extension case; these would be considered as syntactic sugar to generate these datatypes. E.g.,
@@ -435,14 +431,14 @@
                     <h2>Serializations</h2>
     
                     <p>
-                        In terms of serializations, this change could be completely transparent for RDF. I.e., the examples used before would become:
+                        In terms of serializations, this change could be completely transparent for RDF. I.e., the examples used before would become, in Turle:
                     </p>
     
                     <pre class=nohighlight>
                             [] ex:example "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>"@he-d-rtl .
                         </pre>
     
-                    <p>in Turtle, and</p>
+                    <p>and in JSON-LD:</p>
     
                     <pre class=nohighlight>
                         "ex:example" : {
@@ -450,8 +446,6 @@
                             "@language" : "he-d-rtl"
                         }
                     </pre>
-    
-                    <p>in JSON-LD.</p>
                 </section>
     
                 <section>
@@ -477,14 +471,14 @@
                     <h2>Serializations</h2>
     
                     <p>
-                        In terms of serializations, this change could be completely transparent for RDF. I.e., the examples used before would become:
+                        In terms of serializations, this change could be completely transparent for RDF. I.e., the examples used before would become, in Turtle:
                     </p>
     
                     <pre class=nohighlight>
                             [] ex:example "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>"@he-x-d-rtl .
                         </pre>
     
-                    <p>in Turtle, and</p>
+                    <p>and in JSON-LD:</p>
     
                     <pre class=nohighlight>
                             "ex:example" : {
@@ -493,7 +487,6 @@
                             }
                         </pre>
     
-                    <p>in JSON-LD.</p>
                 </section>  
                 <section>
                     <h2>Pros and Cons</h2>
@@ -576,14 +569,14 @@
                 <h2>Serializations</h2>
 
                 <p>
-                    In terms of serializations, this change is completely transparent for RDF. Ie, the example used before would become:
+                    In terms of serializations, this change is completely transparent for RDF. Ie, the example used before would become, in Turtle:
                 </p>
 
                 <pre class=nohighlight>
 						[] ex:example "<bdo dir="ltr">\u200F&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>"@he .
 					</pre>
 
-                <p>in Turtle, and</p>
+                <p>and in JSON-LD:</p>
 
                 <pre class=nohighlight>
 						"ex:example" : {
@@ -592,7 +585,6 @@
 						}
 					</pre>
 
-                <p>in JSON-LD.</p>
             </section>
 
             <section>
