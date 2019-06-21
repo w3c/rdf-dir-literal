@@ -80,16 +80,12 @@
 					</li>
 
 					<li>
-						if and only if the <a href="#dfn-datatype-iri" class="internalDFN">datatype <abbr title="Internationalized Resource Identifier">IRI</abbr></a> is <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#langString</code>, a non-empty <dfn>language tag</dfn> as defined by&nbsp;[[bcp47]]<span class=add>, and a non-empty <dfn>base direction tag</dfn></span>. The language tag MUST be well-formed according to <a href="http://tools.ietf.org/html/bcp47#section-2.2.9">section 2.2.9</a> of [[BCP47]]. <span class=add>The base direction tag MUST have the value of <code>ltr</code>, <code>rtl</code>, or <code>auto</code>, semantically defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]</span>.
+						if and only if the <a href="#dfn-datatype-iri" class="internalDFN">datatype <abbr title="Internationalized Resource Identifier">IRI</abbr></a> is <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#langString</code>, <span class=add>either</span> a non-empty <dfn>language tag</dfn> as defined by&nbsp;[[bcp47]]<span class=add>, or and a non-empty <dfn>base direction tag</dfn>, or both</span>. The language tag<span class=add>, if any,</span> MUST be well-formed according to <a href="http://tools.ietf.org/html/bcp47#section-2.2.9">section 2.2.9</a> of [[BCP47]]. <span class=add>The base direction tag, if any, MUST have the value of <code>ltr</code>, <code>rtl</code>, semantically defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]</span>.
 					</li>
 				</ul>
 			
 				<p>
-					A literal is a <dfn id="dfn-language-tagged-string">language-tagged string</dfn> if the third <span class='add'>fourth</span> element<span class=add>s</span> <span class=delete>is</span><span class=add>are</span> present. Lexical representations of language tags <em class="rfc2119" title="MAY">MAY</em> be converted to lower case. The value space of language tags is always in lower case. 
-				</p>
-
-				<p class="note add">
-					The value of <code>auto</code> for the <a>base direction tag</a> represents a default behavior for the rendering of bidirectional texts, and can be used by concrete syntaxes as a “default” value.
+					A literal is a <dfn id="dfn-language-tagged-string">language-tagged string</dfn> if the third <span class='add'>and/or the fourth</span> element<span class=add>s</span> <span class=delete>is</span><span class=add>are</span> present. Lexical representations of language tags <em class="rfc2119" title="MAY">MAY</em> be converted to lower case. The value space of language tags is always in lower case. 
 				</p>
 			
 				<p>		
@@ -101,7 +97,7 @@
 				<ol>
 					<li>If the literal is a <a>language-tagged string</a>,
 					then the literal value is a <span class=delete>pair</span><span class=add>triple</span> consisting of its <a href="#dfn-lexical-form" class="internalDFN">lexical form</a>
-					<span class=delete>and</span><span class=add>, </span> its <a>language tag</a>, <span class=add>and its <a>base direction tag</a>,</span> in that order.</li>
+					<span class=delete>and</span><span class=add>, </span> its <a>language tag</a>, <span class=add>and its <a>base direction tag</a>,</span> in that order. <span class=add>Either the language tag or the base direction tag may be a <code>undefined</code> value.</span></li>
 			
 					<li>If the literal's <a href="#dfn-datatype-iri" class="internalDFN">datatype <abbr title="Internationalized Resource Identifier">IRI</abbr></a> is in the set of
 					<a href="#dfn-recognized-datatype-iris" class="internalDFN">recognized datatype IRIs</a>, let <var>d</var> be the
@@ -136,6 +132,10 @@
 					same literal <a title="RDF Term" href="#dfn-rdf-term" class="internalDFN">RDF terms</a> and are not
 					<a title="literal term equality" href="#dfn-literal-term-equality" class="internalDFN">term-equal</a> because their
 					<a href="#dfn-lexical-form" class="internalDFN">lexical form</a> differs.</p>
+
+				<p class="add note">
+					The datatype IRI <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#langString</code> may seem confusing, since literals with this datatype may have only a base direction tag and <em>no</em> language tag. It was so named in a previous version of RDF where only language tags existed, and has been kept as is for backward compatibility reasons.
+				</p>
 			</section>
 	    </section>
 
