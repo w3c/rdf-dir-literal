@@ -362,19 +362,19 @@
                     <p>
                         This approach considers the “ideal” solution of <a href="#extending-lang-string">extending `langString`</a> (taking care of the core problem in RDF) but adding some feasibility considerations. The goal is to avoid the necessity to <a href="#full-family">update all RDF related specifications</a> at the same time. This could be achieved as follows.
                     </p>
-        
+
+                    <p class=note>
+                        It is worth noting that, in all solutions proposed above, the value space of the updated/new datatype is identical: triples consisting of the string, the language tag, and a base direction tag, where at most one of the tags may be <code>undefined</code>.
+                    </p>
+
                     <ul>
-                        <li>The core RDF 1.1 specification is updated, as described in <a href="#langString">the section above</a>.</li>
-                        <li>One of the new datatype(s) (as described <a href="#datatype">above</a>) is adopted defined, but with the following modifications:
+                        <li>One of the new datatypes (or family thereof), as described <a href="#datatype">above</a>, is adopted, with the explicit provision that it is to be deprecated eventually. I.e., it is considered to be of a temporary usage only.</li>
+                        <li>The core RDF 1.1 specification is updated, as described in <a href="#langString">the section above</a>.
                             <ul>
                                 <li>
-                                    These datatypes are defined to be deprecated eventually, i.e., they are considered to be of a temporary usage only;
-                                </li>
+                                    The serializations of the new datatype(s) (in N-Triple, N-Quads, Turtle, TriG, etc.) would remain valid (e.g., <code>"value@XX^YY"^^rdf:LocalizableString</code>, or <code>"value"^^i18n:XX_YY</code>, respectively). However, they would be specially parsed and mapped to the renewed `rdf:langString` datatype.</li>
                                 <li>
-                                    The value space for the datatype(s) consists of the renewed language string tuples as defined in the (renewed) RDF semantics document&nbsp;[[rdf11-mt]];
-                                </li>
-                                <li>
-                                    Current serializations (N-Triple, N-Quads, Turtle, TriG, etc.) would remain valid using the, e.g., <code>"value@XX^YY"</code>, respectively <code>"value"^^i18n:XX_YY</code>, syntax. Upcoming versions MAY introduce new syntaxes (akin to what has been <a href="#base-serializations">described above</a>) to be mapped to the renewed language string tuples. However a base direction COULD still be expressed using the, e.g., <code>"value"^^i18n:XX_YY</code> syntax, and that syntax would be specially parsed as the corresponding renewed language string, too. 
+                                    New syntaxes (akin to what has been <a href="#base-serializations">described above</a>) MAY also be introduced. However, to ensure interoperability with older RDF implementations, serializers MAY keep using the special syntax described above. 
                                 </li>
                             </ul>
                         </li>
@@ -385,7 +385,7 @@
                     </p>
         
                     <p>
-                        In view of their different usage patterns, new versions of RDFa and JSON-LD may be updated, though, with the appropriate adaptations on the RDF Graphs they generate (e.g., if they generate N-Triples then the new datatypes should be used; if they are built on top of an RDF 1.2 compliant environment they would generate the proper value space entries).
+                        In view of their different usage patterns, new versions of RDFa and JSON-LD may be updated, though, with the appropriate adaptations on the RDF Graphs they generate (e.g., if they generate N-Triples then the new temporary datatypes should be used; if they are built on top of an RDF 1.2 compliant environment they would generate the proper value space entries).
                     </p>
                     <section>
                         <h2>Pros and Cons</h2>
@@ -394,7 +394,7 @@
                             The major advantage of this approach is that it combines the ideal solution of taking care of an RDF “bug” while ensuring a somewhat smoother deployment.
                         </p>
                         <p>
-                            A disadvantage is that it creates a special case in several concrete syntaxes (e.g. Turtle), where the `i18:XX_YY` family of IRIs are used as "magic" terms, and end up being interpreted as a different IRI (namely `rdf:langString`). Another disadvantage is that there has to be a very careful consideration when the datatypes are deprecated, rescinded, etc., i.e., it will need a careful monitoring of the RDF ecosystem evolution.
+                            A disadvantage is that it creates a special case in several concrete syntaxes (e.g. Turtle), where the `rdf:LocalizableString` or `i18:XX_YY` family of IRIs are used as "magic" terms, and end up being interpreted as a different IRI (namely `rdf:langString`). Another disadvantage is that there has to be a very careful consideration when the datatypes are deprecated, rescinded, etc., i.e., it will need a careful monitoring of the RDF ecosystem evolution.
                         </p>
                     </section>
                 </section>
