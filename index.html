@@ -94,7 +94,7 @@
         </p>
 
         <p class=note>
-            The problem of setting the base direction for a string is, actually, the tip of the iceberg of internationalization issues around RDF literals. This document focuses so far <em>only</em> on establishing the overall directional context for a given string. The larger problems is handling the directional and languages changes <em>within</em> a string. To solve that larger issue would require the use of Unicode formatting characters <em>within</em> plain text strings, or the use of HTML format strings, i.e., the <a data-cite="!rdf11-concepts#section-html"><code>HTML</code> datatype</a> of RDF 1.1&nbsp;[[rdf11-concepts]]. While both of these <em>can</em> be done in today’s RDF, there are several problems with both those approaches (see also [[string-meta]] for some of the issues) which warrants to find a somewhat simpler solution for the base direction case.
+            The problem of setting the base direction for a string is, actually, the tip of the iceberg of internationalization issues around RDF literals. This document focuses so far <em>only</em> on establishing the overall directional context for a given string. There are additional problems related to handling the directional and languages changes <p>within</p> a string. For bidirectional text, this requires the use of Unicode formatting characters within plain text strings, or the use of HTML format strings, i.e., the <a data-cite="!rdf11-concepts#section-html"><code>HTML</code> of RDF 1.1 [rdf11-concepts]. While both of these can be done in today’s RDF, there are still problems with those approaches (see also [string-meta] for some of the issues).
         </p>
 
     </section>
@@ -226,7 +226,7 @@
                         <dl>
                             <dt>Lexical space</dt>
                             <dd>
-                                Unicode [[UNICODE]] strings, which SHOULD be in Normal Form C&nbsp;[[nfc]], and which MUST follow the pattern <code>value@lang^dir</code>. <code>lang</code> is a&nbsp;[[bcp47]] language tag, <code>dir</code> MUST have the value of <code>ltr</code> or <code>rtl</code>, with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]. The presence of <em>one of the two</em> tags is REQUIRED, though one of the two MAY be missing.
+                                Unicode [[UNICODE]] strings which MUST follow the pattern <code>value@lang^dir</code>. <code>lang</code> is a&nbsp;[[bcp47]] language tag, <code>dir</code> MUST have the value of <code>ltr</code> or <code>rtl</code>, with the semantics as defined for the <a data-cite=!html/dom.html#the-dir-attribute><code>dir</code> attribute</a> in&nbsp;[[html]]. The presence of <em>one of the two</em> tags is REQUIRED, though one of the two MAY be missing.
                             </dd>
                             <dt>Value space</dt>
                             <dd>
@@ -262,7 +262,7 @@
                         <dl>
                             <dt>Lexical space</dt>
                             <dd>
-                                Unicode [[UNICODE]] strings, which SHOULD be in Normal Form C&nbsp;[[nfc]].
+                                Unicode [[UNICODE]] strings.
                             </dd>
                             <dt>Value space</dt>
                             <dd>
@@ -451,7 +451,7 @@
                 <section>
                     <h2>Pros and Cons</h2>  
                     
-                    <p>Beyond the general issues described <a href="#bcp_pc">below</a>, this approach has the additional problem that it requires a formal extension of the current [[bcp47]] standard. The first reaction of that community (see the relevant <a href="https://mailarchive.ietf.org/arch/browse/ietf-languages/?gbt=1&index=FNDxsLMAPdb8I1Bw6iyGlWZvuGM">email thread</a> on the IETF mailing list) were certainly not in favor…</p>
+                    <p>Beyond the general issues described <a href="#bcp_pc">below</a>, this approach has the additional problem that it requires a formal extension of the current [[bcp47]] standard. The first reaction of that community (see, e.g., the relevant <a href="https://mailarchive.ietf.org/arch/browse/ietf-languages/?gbt=1&index=FNDxsLMAPdb8I1Bw6iyGlWZvuGM">email thread</a> on the IETF mailing list) were certainly not in favor…</p>
                 </section>
             </section>
     
@@ -500,7 +500,7 @@
                 <h2>Rely on current BCP47 only</h2>
     
                 <p>
-                    A different approach stems from the observation that the current BCP-47 can be used, unchanged, to express the necessary base direction using, <em>if necessary</em>, the “script” subtag. The latter is necessary if the language itself does not uniquely identify the script (and, in consequence, the base direction) of the text. This is the case, for example, for Azerbaijani, that may have Arabic, Cyrillic, and Latin scripts. However, the combination of these two information, plus the basic algorithms defined for UNICODE, has the necessary information. For example, </p>
+                    A different approach stems from the observation that, in certain contexts, the current BCP-47 can be used, unchanged, to express the necessary base direction using, <em>if necessary</em>, the “script” subtag. The latter is necessary if the language itself does not uniquely identify the script (and, in consequence, the base direction) of the text. This is the case, for example, for Azerbaijani, that may have Arabic, Cyrillic, and Latin scripts. However, the combination of these two information, plus the basic algorithms defined for UNICODE, has the necessary information. For example, </p>
     
                 <pre class=nohighlight>
                     "ex:example" : {
@@ -509,7 +509,7 @@
                     }
                 </pre>
     
-                <p>does, in fact, include the necessary information to deduce the right-to-left nature of the text by virtue of declaring the text to be in Hebrew, whereas in</p>
+                <p>may, in fact, include the necessary information to deduce the right-to-left nature of the text by virtue of declaring the text to be in Hebrew, whereas in</p>
     
                 <pre class=nohighlight>
                     [] ex:example "<bdo dir="ltr">آذربايجانجا ديلي</bdo>"@az-Arab ;
@@ -538,7 +538,7 @@
                 </p>
 
                 <p>
-                    A major issue is that [[bcp47]] is already a very complex specification, in terms of the rich "metadata" that it assigns to languages. It is not clear whether the notion of base direction “fits” the purpose of&nbsp;[[bcp47]], which is to describe metadata about language, scripts used, etc., and not a feature that is relevant for the <em>display</em> of that string. (See also the relevant <a href="https://mailarchive.ietf.org/arch/browse/ietf-languages/?gbt=1&index=FNDxsLMAPdb8I1Bw6iyGlWZvuGM">email thread</a> on the IETF mailing list.)
+                    A major issue is that [[bcp47]] is already a very complex specification, in terms of the rich "metadata" that it assigns to languages. The notion of base direction does not fit, per current usage and understanding, the purpose of&nbsp;[[bcp47]], which is to describe metadata about language, scripts used, etc., and not a feature that is relevant for the <em>display</em> of that string. (See also the relevant <a href="https://mailarchive.ietf.org/arch/browse/ietf-languages/?gbt=1&index=FNDxsLMAPdb8I1Bw6iyGlWZvuGM">email thread</a> on the IETF mailing list.)
                 </p>
                 
                 <p>    
