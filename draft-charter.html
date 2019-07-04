@@ -165,7 +165,9 @@
         There is a problem at the intersection of RDF Literals and internationalization. When using string Literals for natural language texts, the <a href="https://www.w3.org/TR/rdf11-concepts#section-Graph-Literal"><code>langString</code> datatype</a> of RDF 1.1 provides the possibility to add the language information via a <a href="https://tools.ietf.org/html/bcp47">bcp47</a> language tag. However, it is not possible to express the <em>base text direction</em> (i.e., right-to-left or left-to-right) of the same literal. While this issue is solved in HTML through the <a href="https://www.w3.org/TR/html/dom.html#the-dir-attribute"><code>dir</code> attribute</a>, and can be done when defining, e.g., a set of terms in simple JSON, this is not possible in the abstract model of RDF and, consequently, in the serialization syntaxes of RDF like <a href="https://www.w3.org/TR/turtle">Turtle</a> or <a href="https://www.w3.org/TR/json-ld/">JSON-LD</a>. See a <a href="https://w3c.github.io/rdf-dir-literal/">separate document</a>, and the corresponding <a href="https://github.com/w3c/rdf-dir-literal/issues?q=is%3Aissue+is%3Aopen+label%3A%22preliminary+discussions%22">github issues</a>, for a more detailed description of the problem as well as the possible solutions that have been explored.
       </p>
 
-      <p>This Working Group will update the RDF 1.1 family of specification (including the serializations syntaxes), as well as a number of other, related specifications to include a base direction information for the <a href="https://www.w3.org/rdf11-concepts#section-Graph-Literal"><code>langString</code> datatype</a> (see a <a href="#deliverable-list">detailed list of specifications below</a>). These changes must be backward compatible, i.e.,</p>
+      <p>
+        This Working Group will update the RDF 1.1 family of specification (including the serializations syntaxes), as well as adapt a number of other, related specifications to include a base direction information for the <a href="https://www.w3.org/rdf11-concepts#section-Graph-Literal"><code>langString</code> datatype</a> (see a <a href="#deliverable-list">detailed list of specifications below</a>). These changes must be backward compatible, i.e.,
+      </p>
 
       <ul>
         <li>all RDF 1.1 Graphs, containing triples with language tags literals, remain valid and with the same semantics;</li>
@@ -175,8 +177,7 @@
 
       <aside class="comment">These bullet points need a more precise formulation!</aside>
      
-
-      <p><em>Editorial</em> errata for the specifications will also be handled by the Working Group.</p>
+      <p>Official <em>editorial</em> errata for the specifications in the respective families of documents will also be handled by the Working Group (see the references to the official errata lists in the <a href="#deliverables">section on deliverables</a>). In case of doubt, the original errata author(s), as well as appropriate experts, must be contacted to make sure that the changes are not technical.</p>
 
         <section id="section-out-of-scope">
           <h3 id="out-of-scope">Out of Scope</h3>
