@@ -168,7 +168,7 @@
                         <h2>Turtle/SPARQL</h2>
                         <p>Turtle has a special syntax for language tagged literals which could be extended, e.g.,:</p>
     
-                        <pre class="nohighlight">
+                        <pre class="nohighlight" id="langstring-example">
                             [] ex:example "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>"@he^rtl ;
                                ex:isbn "978-2-290-16543-0"@^ltr .
                         </pre>
@@ -413,8 +413,116 @@
                 </p>
 
                 <p>
-                    The major disadvantage of this solution is that touches the “core” of the RDF family of specifications, that comprises, by now, a rather large number of technologies (SPARQL, SHACL, conversion standards like R2RML or CSVW, etc), and this means that, eventually, all these standards must be refined in some way or other. Using a <a href=#datatype>datatype</a> and, mainly, the <a href="hybrid">“hybrid”</a> approach mitigates the problem somewhat but, even in that case, applications SHOULD, eventually, be adapted to these new datatypes, which necessitates, per W3C process, setting up dedicated Working Groups. 
+                    The major disadvantage of these solutions is that touches the “core” of the RDF family of specifications, that comprises, by now, a rather large number of technologies (SPARQL, SHACL, conversion standards like R2RML or CSVW, etc), and this means that, eventually, all these standards must be refined in some way or other. Using a <a href=#datatype>datatype</a> and, mainly, the <a href="hybrid">“hybrid”</a> approach mitigates the problem somewhat but, even in that case, applications SHOULD, eventually, be adapted to these new datatypes, which necessitates, per W3C process, setting up dedicated Working Groups. 
                 </p>
+            </section>
+        </section>
+
+        <section id="vocabulary_based">
+            <h2>Compound literal based solution</h2>
+            <p>
+                This solution is inspired by a separate discussion of the RDF community on <a href='https://github.com/w3c/EasierRDF/issues/22'>“Language Tagged Strings”</a> (that issue summarizes a large number of mails related to this issue that have been accumulated over the years). The essence of the discussion is to separate the “string”, as a simple data, from <em>all</em> the various characterizations that may be added to a string. Language is one of those, but one can refer to, say, pronunciation issues, translation-related terms (like in [[its]]) and, of course direction. _We should not aim at solving all the issues raised in that discussion_, but we can get inspired and provide a basis for the community to carry on further, if it wishes. 
+            </p>
+
+            <section>
+                <h2><code>CompoundLiteral</code> (RDF) class</h2>
+
+                <section>
+                    <h2>Core definition</h2>
+
+                    <p>The following terms are defined in RDF:</p>
+
+                    <ul>
+                        <li><code>rdf:CompoundLiteral</code>: is a class representing a compound literal.</li>
+                        <li><code>rdf:language</code>: an RDF <em>property</em>. The range of the property is an <code>rdfs:Literal</code>, whose value must be a well-formed [[bcp47]] tag. The domain of the property is <code>rdf:CompoundLiteral</code>.</li>
+                        <li><code>rdf:direction</code>: an RDF <em>property</em>. The range of the property must be an <code>rdfs:Literal</code>, whose value must be either <code>"ltr"</code> or <code>"rtl"</code>. The domain of the property is <code>rdf:CompoundLiteral</code>.</li>
+                    </ul>
+    
+                    <p>Semantically, the following triples represent a compound literal, whose language and base direction are specified:</p>
+    
+                    <pre class=nohighlight>
+                        _:a rdf:type rdf:CompoundLiteral .
+                        _:a rdf:value "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>" .
+                        _:a rdf:language "he" . 
+                        _:a rdf:direction "rtl" .
+                    </pre>
+
+                    <p>The (blank) node <code>_:a</code> stands for the literal, whose language is Hebrew, and whose direction is right-to-left. It usage would be (using the turtle syntax to make it a bit simpler):</p>
+
+                    <p class=note>The <code>rdf:</code> namespace has been used in the definition for the sake of simplicity; it is a separate decision whether that, or another namespace should be used. </p>
+
+                    <section id=rdf-like>
+                        <h2>A more “RDF-like” variant</h2>
+
+                        <p>From strict RDF point of view, the definition is sloppy; it attaches an extra semantics to the values of literals instead of making using URLs for clear terms. A cleaner definition may be to define the following terms:</p>
+
+                        <ul>
+                            <li><code>rdf:CompoundLiteral</code>: is a class representing a compound literal.</li>
+                            <li>the set of individuals of the form <code>https://www.w3.org/i18n/lang#XX</code>, where <code>XX</code> is a well-formed [[bcp47]] tag (the class of language tags)</li>
+                            <li>the set of the two individuals of the form <code>https://www.w3.org/i18n/dir#ltr</code> and <code>https://www.w3.org/i18n/dir#rtl</code> (the class of direction tags)</li>
+                            <li><code>rdf:language</code>: an RDF <em>property</em>. The range of the property is the class of language tag URL, the domain is <code>rdf:CompoundLiteral</code>
+                            <li><code>rdf:direction</code>: an RDF <em>property</em>. The range of the property is the class of direction tag URL, the domain is <code>rdf:CompoundLiteral</code>
+                        </ul>
+
+                        <p>Using the <code>i18n:</code> namespace the example representation would look slightly different:</p>
+
+                        <pre class=nohighlight>
+                            _:a rdf:type rdf:CompoundLiteral .
+                            _:a rdf:value "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>" .
+                            _:a rdf:language i18n:lang#he . 
+                            _:a rdf:direction i18n:dir#rtl .
+                        </pre>
+
+                    </section>
+                </section>
+                
+                <section>
+                    <h2>Serializations</h2>
+
+                    <p>(The serialization of the <a href="#rdf-like">RDF like variant</a> is left as an exercise for the reader.) </p>
+
+                    <section>
+                        <h2>Turtle</h2>
+                        <pre class=nohighlight>
+                                [] ex:example [
+                                    rdf:value "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>" ;
+                                    rdf:language "he" ; 
+                                    rdf:direction "rtl" ;
+                                ] .
+                        </pre>
+                                    
+                        <p>Note that, compared to <a href="#langstring-example">previous examples</a> the text does not appear directly as the object of a triple, but is encapsulated in a separate (blank) node that “represents” the text with all attributes attached.</p>
+                    </section>
+
+                    <section>
+                        <h2>JSON-LD</h2>
+                        <p>Interestingly, due to the specificities of the JSON-LD syntax, the serialization of compound literals is extremely straightforward. Indeed, a syntax of the form:</p>
+
+                        <pre class=nohighlight>
+                            "ex:example" : {
+                                "@value" : "<bdo dir="ltr">&#x05E4;&#x05E2;&#x05D9;&#x05DC;&#x05D5;&#x05EA; &#x05D4;&#x05D1;&#x05D9;&#x05E0;&#x05D0;&#x05D5;&#x05DD;, W3C</bdo>"
+                                "@language" : "he",
+                                "@direction" : "rtl"
+                            }
+                        </pre>
+            
+                        <p>may be mapped onto compound literals directly.</p>
+                    </section>
+                </section>
+                <section>
+                    <h2>Pros and Cons</h2>
+                    <p>
+                        The major advantage of this approach is that it is fully transparent to current RDF deployments, and affects only application layers that do display the literal values for humans. They also work for parsers “out of the box”. As an extra bonus (as mentioned <a href='https://github.com/w3c/EasierRDF/issues/22'>“Language Tagged Strings”</a> discussion) it may actually be easier to search such compound literals via, say, SPARQL then using the current RDF approach.
+                    </p>
+
+                    <p>
+                        The obvious disadvantage is that it duplicates a mechanism for expressing string with the language tag <em>only</em>: one can use the core <code>langString</code> datatype <em>or</em> the compound literals. The relationship between the two forms should be specified.
+                    </p>
+
+                    <p>
+                        (It would be possible to make a “mix” whereby, instead of using <code>rdf:language</code>, one would use a <code>rdf:langString</code> as an object for <code>rdf:value</code>.)
+                    </p>
+                </section>
             </section>
         </section>
 
@@ -620,7 +728,7 @@
     <section class=appendix>
         <h2>Acknowledgements</h2>
         <p>
-            This document is a synopsis of a series of discussions, email contributions, etc., of a number of people, including Manu Sporny, Gregg Kellogg, David Longley, Rob Sanderson, Benjamin Young, Charles Neville, Richard Ishida, Addison Philips, Martin Dürst, and Mark Davis.
+            This document is a synopsis of a series of discussions, email contributions, etc., of a number of people, including Manu Sporny, Gregg Kellogg, David Longley, Rob Sanderson, Benjamin Young, Charles Neville, Richard Ishida, Addison Philips, Martin Dürst, Andy Seaborne, and Mark Davis.
         </p>
     </section>
 
