@@ -447,14 +447,14 @@
                         _:a rdf:direction "rtl" .
                     </pre>
 
-                    <p>The (blank) node <code>_:a</code> stands for the literal, whose language is Hebrew, and whose direction is right-to-left. It usage would be (using the turtle syntax to make it a bit simpler):</p>
+                    <p>The (blank) node <code>_:a</code> stands for the literal, whose language is Hebrew, and whose direction is right-to-left.</p>
 
                     <p class=note>The <code>rdf:</code> namespace has been used in the definition for the sake of simplicity; it is a separate decision whether that, or another namespace should be used. </p>
 
                     <section id=rdf-like>
                         <h2>A more “RDF-like” variant</h2>
 
-                        <p>From strict RDF point of view, the definition is sloppy; it attaches an extra semantics to the values of literals instead of making using URLs for clear terms. A cleaner definition may be to define the following terms:</p>
+                        <p>From strict RDF point of view, the definition above is sloppy; it attaches an extra semantics to the values of literals instead of using URLs for identifying distinct notions such as languages and directions. A cleaner definition may be to define the following terms:</p>
 
                         <ul>
                             <li><code>rdf:CompoundLiteral</code>: is a class representing a compound literal.</li>
@@ -512,11 +512,11 @@
                 <section>
                     <h2>Pros and Cons</h2>
                     <p>
-                        The major advantage of this approach is that it is fully transparent to current RDF deployments, and affects only application layers that do display the literal values for humans. They also work for parsers “out of the box”. As an extra bonus (as mentioned <a href='https://github.com/w3c/EasierRDF/issues/22'>“Language Tagged Strings”</a> discussion) it may actually be easier to search such compound literals via, say, SPARQL then using the current RDF approach.
+                        The major advantage of this approach is that it is fully transparent to current RDF deployments, and affects only application layers that do display the literal values for humans. It also work for parsers “out of the box”. As an extra bonus (as mentioned <a href='https://github.com/w3c/EasierRDF/issues/22'>“Language Tagged Strings”</a> discussion) it may actually be easier to query such compound literals via, say, SPARQL than using the current RDF approach.
                     </p>
 
                     <p>
-                        The obvious disadvantage is that it duplicates a mechanism for expressing string with the language tag <em>only</em>: one can use the core <code>langString</code> datatype <em>or</em> the compound literals. The relationship between the two forms should be specified.
+                        The obvious disadvantage is that it duplicates a mechanism for expressing strings with a language tag <em>only</em>: one can use the core <code>langString</code> datatype <em>or</em> the compound literals. The relationship between the two forms should be specified.
                     </p>
 
                     <p>
