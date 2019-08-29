@@ -40,7 +40,8 @@
                 repoURL: "https://github.com/w3c/rdf-dir-literal/",
                 branch: "master"
             },
-            localBiblio: biblio
+            localBiblio: biblio,
+            maxTocLevel: 4
         };
     </script>
     <style>
@@ -363,69 +364,53 @@
             </section>
 
             <section id=hybrid>
-                    <h2>Hybrid solution</h2>
-                    <p>
-                        This approach considers the “ideal” solution of <a href="#extending-lang-string">extending `langString`</a> (taking care of the core problem in RDF) but adding some feasibility considerations. The goal is to avoid the necessity to <a href="#full-family">update all RDF related specifications</a> at the same time. This could be achieved as follows.
-                    </p>
+                <h2>Hybrid solution</h2>
+                <p>
+                    This approach considers the “ideal” solution of <a href="#extending-lang-string">extending `langString`</a> (taking care of the core problem in RDF) but adding some feasibility considerations. The goal is to avoid the necessity to <a href="#full-family">update all RDF related specifications</a> at the same time. This could be achieved as follows.
+                </p>
 
-                    <p class=note>
-                        It is worth noting that, in all solutions proposed above, the value space of the updated/new datatype is identical: triples consisting of the string, the language tag, and a base direction tag, where at most one of the tags may be <code>undefined</code>.
-                    </p>
+                <p class=note>
+                    It is worth noting that, in all solutions proposed above, the value space of the updated/new datatype is identical: triples consisting of the string, the language tag, and a base direction tag, where at most one of the tags may be <code>undefined</code>.
+                </p>
 
-                    <ul>
-                        <li>One of the new datatypes (or family thereof), as described <a href="#datatype">above</a>, is adopted, with the explicit provision that it is to be deprecated eventually. I.e., it is considered to be of a temporary usage only.</li>
-                        <li>The core RDF 1.1 specification is updated, as described in <a href="#langString">the section above</a>.
-                            <ul>
-                                <li>
-                                    The serializations of the new datatype(s) (in N-Triple, N-Quads, Turtle, TriG, etc.) would remain valid (e.g., <code>"value@XX^YY"^^rdf:LocalizableString</code>, or <code>"value"^^i18n:XX_YY</code>, respectively). However, they would be specially parsed and mapped to the renewed <code>rdf:langString</code> datatype.</li>
-                                <li>
-                                    New syntaxes (akin to what has been <a href="#base-serializations">described above</a>) MAY also be introduced. However, to ensure interoperability with older RDF implementations, serializers MAY keep using the special syntax described above. 
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                <ul>
+                    <li>One of the new datatypes (or family thereof), as described <a href="#datatype">above</a>, is adopted, with the explicit provision that it is to be deprecated eventually. I.e., it is considered to be of a temporary usage only.</li>
+                    <li>The core RDF 1.1 specification is updated, as described in <a href="#langString">the section above</a>.
+                        <ul>
+                            <li>
+                                The serializations of the new datatype(s) (in N-Triple, N-Quads, Turtle, TriG, etc.) would remain valid (e.g., <code>"value@XX^YY"^^rdf:LocalizableString</code>, or <code>"value"^^i18n:XX_YY</code>, respectively). However, they would be specially parsed and mapped to the renewed <code>rdf:langString</code> datatype.</li>
+                            <li>
+                                New syntaxes (akin to what has been <a href="#base-serializations">described above</a>) MAY also be introduced. However, to ensure interoperability with older RDF implementations, serializers MAY keep using the special syntax described above.
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <p>
+                    What this hybrid approach brings is that, as the first step, it is enough to update RDF 1.1 (as described in the <a href="#langString">separate section</a>). The other specifications, as well as their deployments, are not under the pressure to be updated right away. Graphs using the new datatypes can be defined using the traditional syntaxes. At a later point, when the usage becomes widespread, the datatypes might be rescinded, alongside the updates of SPARQL, SHACL, etc., incorporating the new <code>langString</code>.
+                </p>
+
+                <p>
+                    In view of their different usage patterns, new versions of RDFa and JSON-LD may be updated, though, with the appropriate adaptations on the RDF Graphs they generate (e.g., if they generate N-Triples then the new temporary datatypes should be used; if they are built on top of an RDF 1.2 compliant environment they would generate the proper value space entries).
+                </p>
+                <section>
+                    <h2>Pros and Cons</h2>
         
                     <p>
-                        What this hybrid approach brings is that, as the first step, it is enough to update RDF 1.1 (as described in the <a href="#langString">separate section</a>). The other specifications, as well as their deployments, are not under the pressure to be updated right away. Graphs using the new datatypes can be defined using the traditional syntaxes. At a later point, when the usage becomes widespread, the datatypes might be rescinded, alongside the updates of SPARQL, SHACL, etc., incorporating the new <code>langString</code>.
+                        The major advantage of this approach is that it combines the ideal solution of taking care of an RDF “bug” while ensuring a somewhat smoother deployment.
                     </p>
-        
                     <p>
-                        In view of their different usage patterns, new versions of RDFa and JSON-LD may be updated, though, with the appropriate adaptations on the RDF Graphs they generate (e.g., if they generate N-Triples then the new temporary datatypes should be used; if they are built on top of an RDF 1.2 compliant environment they would generate the proper value space entries).
+                        A disadvantage is that it creates a special case in several concrete syntaxes (e.g. Turtle), where the <code>rdf:LocalizableString</code> or <code>i18:XX_YY</code> family of IRIs are used as "magic" terms, and end up being interpreted as a different IRI (namely <code>rdf:langString</code>). Another disadvantage is that there has to be a very careful consideration when the datatypes are deprecated, rescinded, etc., i.e., it will need a careful monitoring of the RDF ecosystem evolution.
                     </p>
-                    <section>
-                        <h2>Pros and Cons</h2>
-            
-                        <p>
-                            The major advantage of this approach is that it combines the ideal solution of taking care of an RDF “bug” while ensuring a somewhat smoother deployment.
-                        </p>
-                        <p>
-                            A disadvantage is that it creates a special case in several concrete syntaxes (e.g. Turtle), where the <code>rdf:LocalizableString</code> or <code>i18:XX_YY</code> family of IRIs are used as "magic" terms, and end up being interpreted as a different IRI (namely <code>rdf:langString</code>). Another disadvantage is that there has to be a very careful consideration when the datatypes are deprecated, rescinded, etc., i.e., it will need a careful monitoring of the RDF ecosystem evolution.
-                        </p>
-                    </section>
                 </section>
+            </section>
         
 
-
-            <section>
-                <h2>General comments: Pros and Cons</h2>
+            <section id="compound-literal">
+                <h2>Compound literal</h2>
                 <p>
-                    The major advantage of these solutions is that it keeps the changes “confined” to the realm of RDF, with no danger of interference with other technologies (in contrast to the <a href="#bcp47_based"></a> approach below).
+                    This solution is inspired by a separate discussion of the RDF community on <a href='https://github.com/w3c/EasierRDF/issues/22'>“Language Tagged Strings”</a> (that issue summarizes a large number of mails related to this topic that have been accumulated over the years). The essence of the discussion is to separate the “string”, as a simple data, from <em>all</em> the various characterizations that may be added to it. Language is one of those, but one can refer to, say, pronunciation issues, translation-related terms (like in [[its]]) and, of course direction. <em>We should not aim at solving all the issues raised in that discussion</em>, but we can get inspired and provide a basis for the community to carry on further, if it wishes.
                 </p>
-
-                <p>
-                    The major disadvantage of these solutions is that touches the “core” of the RDF family of specifications, that comprises, by now, a rather large number of technologies (SPARQL, SHACL, conversion standards like R2RML or CSVW, etc), and this means that, eventually, all these standards must be refined in some way or other. Using a <a href=#datatype>datatype</a> and, mainly, the <a href="hybrid">“hybrid”</a> approach mitigates the problem somewhat but, even in that case, applications SHOULD, eventually, be adapted to these new datatypes, which necessitates, per W3C process, setting up dedicated Working Groups. 
-                </p>
-            </section>
-        </section>
-
-        <section id="vocabulary_based">
-            <h2>Compound literal based solution</h2>
-            <p>
-                This solution is inspired by a separate discussion of the RDF community on <a href='https://github.com/w3c/EasierRDF/issues/22'>“Language Tagged Strings”</a> (that issue summarizes a large number of mails related to this issue that have been accumulated over the years). The essence of the discussion is to separate the “string”, as a simple data, from <em>all</em> the various characterizations that may be added to a string. Language is one of those, but one can refer to, say, pronunciation issues, translation-related terms (like in [[its]]) and, of course direction. _We should not aim at solving all the issues raised in that discussion_, but we can get inspired and provide a basis for the community to carry on further, if it wishes. 
-            </p>
-
-            <section>
-                <h2><code>CompoundLiteral</code> (RDF) class</h2>
 
                 <section>
                     <h2>Core definition</h2>
@@ -518,13 +503,22 @@
                     <p>
                         The obvious disadvantage is that it duplicates a mechanism for expressing strings with a language tag <em>only</em>: one can use the core <code>langString</code> datatype <em>or</em> the compound literals. The relationship between the two forms should be specified.
                     </p>
-
-                    <p>
-                        (It would be possible to make a “mix” whereby, instead of using <code>rdf:language</code>, one would use a <code>rdf:langString</code> as an object for <code>rdf:value</code>.)
-                    </p>
                 </section>
             </section>
+
+
+            <section>
+                <h2>General comments: Pros and Cons</h2>
+                <p>
+                    The major advantage of these solutions is that they keep the changes “confined” to the realm of RDF, with no danger of interference with other technologies (in contrast to the <a href="#bcp47_based"></a> approach below).
+                </p>
+
+                <p>
+                    The major disadvantage of these solutions is that they touch the “core” of the RDF family of specifications, that comprises, by now, a rather large number of technologies (SPARQL, SHACL, conversion standards like R2RML or CSVW, etc), and this means that, eventually, all these standards must be refined in one way or another. This is particularly true for <a href="#extending-lang-string"></a>, which directly extends the RDF model. The other solutions in this section, in particular the <a href="#hybrid">hybrid approach</a>, mitigate the problem somewhat. But even in that case, applications SHOULD, eventually, be adapted to the new structure of literals, which necessitates, per W3C process, setting up dedicated Working Groups.
+                </p>
+            </section>
         </section>
+
 
 
         <section id="bcp47_based">
