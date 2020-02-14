@@ -1,3 +1,8 @@
+**NOTICE** This document is not evolved anymore; it was a discussion document that ended its course. The JSON-LD Working Group has now taken over the issue, see [the i18n namespace](https://www.w3.org/TR/json-ld11/#the-i18n-namespace) in that document.
+
+---
+
+
 Musings on adding base direction to RDF Literals.
 
 See the readable [version](https://w3c.github.io/rdf-dir-literal/).
